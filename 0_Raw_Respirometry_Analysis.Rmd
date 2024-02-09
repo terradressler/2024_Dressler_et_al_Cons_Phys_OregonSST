@@ -1,0 +1,45 @@
+---
+title: " Dressler et al. 2024 Raw Respirometry Analysis"
+author: "Terra Dressler"
+date: "2024-02-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+his RMD contains analysis of raw repirometry data from 4 populations of summer steelhead (Lower Deschutes, John Day, North Umpqua, Siletz) tested in the field during the summers of 2021 and 2022. These data were recorded on FireStingO2 devices.
+
+These data were analyzed using an early version of the package AnalyzeResp developed by Krista Kraskura. The version of the package used for this analysis is included here as the source code. This package has since been deveoped further and can now be found using install.packages("AnalyzeResp). 
+
+The following analysis was completed before the latest development of the package, but since the basic functionality is the same, the following analysis will continue to use the old code sourced here. 
+
+
+
+#### 1. Load Packages, set working directory
+```{r, message = FALSE, warning=FALSE}
+
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(chron)
+library(lubridate)
+library(dplyr)
+library(pryr)
+library(ggpubr)
+library(magrittr)
+library(tidyr)
+library(broom)
+library(purrr)
+library(mclust)
+library(chron)
+library(DescTools)
+library(lme4)
+library(car)
+
+source("MR_firesting_v2.1.0.R")
+source("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/MR_firesting_v2.1.0.R")
+setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek")
+
+```
