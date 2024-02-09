@@ -37,8 +37,178 @@ library(chron)
 library(DescTools)
 
 source("MR_firesting_v2.1.0.R")
+organize_MR_analysis(create = "Full")
+```
+
+
+#### 2. Convert all text files to csv
+
+Lower Deschutes
+```{r, echo=FALSE}
+
+#RMR Data (Box 1 converted manually due to different file format)
+txt_csv_convert(txt_file = "jul25_2022_box2_amb_rmr.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "jul25_2022_box2_amb_rmr2.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "jul25_2022_box3_amb_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul25_2022_box3_amb_rmr2.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "jul26_2022_box2_hot_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul26_2022_box3_hot_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul27_2022_box2_imd_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul27_2022_box3_imd_rmr.txt", path = "AUTO", N_Ch = 4)
+
+
+
+#MMR Data (Box 1 converted manually due to different file format)
+txt_csv_convert(txt_file = "20220726_box2_Ambient_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "20220726_box3_Ambient_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "20220727_box2_hot_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "20220727_box3_hot_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "20220728_box2_imd_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "20220728_box3_imd_mmr.txt", path = "MANUAL", N_Ch = 4)
+
 
 ```
 
 
+John Day
+```{r, echo=FALSE}
 
+#RMR Data
+txt_csv_convert(txt_file = "jul12_box1_rmr_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul12_box2_rmr_18.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "jul12_box3_rmr_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul13_box1_rmr_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul13_box2_rmr_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul13_box3_rmr_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box1_rmr_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box2_rmr_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box3_rmr_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box1_rmr_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box2_rmr_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box3_rmr_22.txt", path = "AUTO", N_Ch = 4)
+
+#MMR Data
+txt_csv_convert(txt_file = "jul13_box2_mmr_18.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul13_box3_mmr_18.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box1_mmr_26.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box2_mmr_26.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box3_mmr_26.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box1_mmr_18.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box2_mmr_18.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box3_mmr_18.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box1_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box2_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box3_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+
+#Recovery Data
+txt_csv_convert(txt_file = "jul13_box2_recov_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul13_box3_recov_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box1_recov_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box2_recov_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box3_recov_26.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box1_recov_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box2_recov_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box3_recov_18.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box1_recov_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box2_recov_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "jul16_box3_recov_22.txt", path = "AUTO", N_Ch = 4)
+
+#Background (includes Box 1 channel 1 of RMR files)
+txt_csv_convert(txt_file = "jul13_box1_rmr_26.txt", path = "BACTERIAL_RESP", N_Ch = 4)
+txt_csv_convert(txt_file = "jul14_box1_rmr_18.txt", path = "BACTERIAL_RESP", N_Ch = 4)
+txt_csv_convert(txt_file = "jul15_box1_rmr_22.txt", path = "BACTERIAL_RESP", N_Ch = 4)
+
+```
+
+North Umpqua
+```{r, echo=FALSE}
+
+#Box 1 data converted manually due to different file format
+
+#RMR Data
+txt_csv_convert(txt_file = "aug08_2022_box2_amb_rmr.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug08_2022_box2_amb_rmr2.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug08_2022_box2_amb_rmr3.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug08_2022_box3_amb_rmr.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug08_2022_box3_amb_rmr2.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug08_2022_box3_amb_rmr3.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug09_2022_box2_hot_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug09_2022_box3_hot_rmr.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug10_2022_box2_22_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug10_2022_box3_22_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box2_19_rmr.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box3_19_rmr.txt", path = "AUTO", N_Ch = 4)
+
+
+#MMR Data
+txt_csv_convert(txt_file = "aug09_2022_box2_amb_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug09_2022_box3_amb_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug10_2022_box2_hot_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug10_2022_box3_hot_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box2_22_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box3_22_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug12_2022_box2_19_mmr.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug12_2022_box3_19_mmr.txt", path = "MANUAL", N_Ch = 4)
+
+
+#Recovery Data
+txt_csv_convert(txt_file = "aug09_2022_box2_amb_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug09_2022_box3_amb_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug10_2022_box2_hot_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug10_2022_box3_hot_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box2_22_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug11_2022_box3_22_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug12_2022_box2_19_recov.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug12_2022_box3_19_recov.txt", path = "AUTO", N_Ch = 4)
+
+
+```
+
+Siletz
+```{r, echo=FALSE}
+
+#RMR Data
+txt_csv_convert(txt_file = "aug13_box1_rmr_amb.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug13_box2_rmr_amb.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug13_box3_rmr_amb.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box1_rmr_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box2_rmr_22.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug14_box3_rmr_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box1_rmr_20.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box2_rmr_20.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug15_box3_rmr_20.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box1_rmr_24.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box2_rmr_24.txt", path = "AUTO", N_Ch = 4) 
+txt_csv_convert(txt_file = "aug16_box3_rmr_24.txt", path = "AUTO", N_Ch = 4)
+
+#MMR Data
+txt_csv_convert(txt_file = "aug14_box1_mmr_amb.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box2_mmr_amb.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box3_mmr_amb.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box1_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box2_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box3_mmr_22.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box1_mmr_19.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box2_mmr_19.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box3_mmr_19.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box1_mmr_25.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box2_mmr_25.txt", path = "MANUAL", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box3_mmr_25.txt", path = "MANUAL", N_Ch = 4)
+
+
+#Recovery Data
+txt_csv_convert(txt_file = "aug14_box1_recov_amb.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box2_recov_amb.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug14_box3_recov_amb.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box1_recov_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box2_recov_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug15_box3_recov_22.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box1_recov_19.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box2_recov_19.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug16_box3_recov_19.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box1_recov_25.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box2_recov_25.txt", path = "AUTO", N_Ch = 4)
+txt_csv_convert(txt_file = "aug17_box3_recov_25.txt", path = "AUTO", N_Ch = 4)
+
+
+```
