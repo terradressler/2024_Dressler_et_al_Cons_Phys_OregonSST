@@ -18,7 +18,7 @@ The following analysis was completed before the latest development of the packag
 
 
 #### 1. Load Packages, set source code
-```{r, message = FALSE, warning=FALSE}
+```{r}
 
 library(tidyverse)
 library(ggplot2)
@@ -212,3 +212,245 @@ txt_csv_convert(txt_file = "aug17_box3_recov_25.txt", path = "AUTO", N_Ch = 4)
 
 
 ```
+
+#### 3. Metabolic Rate Analysis: Resting Metabolic Rate (RMR)
+
+
+Lower Descutes
+```{r}
+
+#Note: the rmr2 files for the Ambient treatment start ~240 min in. Since we cut off this first 240min already, I will start only use the rmr2 files in RMR analysis
+
+AUTO_csv_files <- "AUTO/csv_files"
+
+#Ambient treatment 
+setwd(AUTO_csv_files)
+convert.o2.Firesting(csv.data = "jul25_2022_box2_amb_rmr2.csv", units_from = "pct", units_to = "mg/L", channels = c(1,2,3,4), salinity = 0, atm_pressure = 1018, n_ch = 4)
+
+setwd(AUTO_csv_files)
+SMR(data = "jul25_2022_box1_amb_rmr2.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 3,
+    cycle_end = 10,
+    chop_start = 60/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders")  #cleaned! Using ch 1,2,3
+
+setwd(AUTO_csv_files)
+SMR(data = "jul25_2022_box2_amb_rmr2.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 3,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+
+    N_Ch=4, path="UseFolders")  #cleaned! Using ch 1,2,3,4
+
+
+
+SMR(data = "jul25_2022_box3_amb_rmr2.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 3,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned! Using ch 1, 2, 3 (some bad traces in 3, using 0.9 threshold)
+
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul25_2022_box1_amb_rmr2_analyzed.csv", 
+	AnimalID = c("A01","A02", "A03", "A04"),
+	BW.animal = c(0.006, 0.0073, 0.0092, 0.0072),
+	resp.V = c(2.086, 2.095, 2.089, 2.107), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4,
+	drop_ch = c(4))
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul25_2022_box2_amb_rmr2_analyzed.csv", 
+	AnimalID = c("A05","A06", "A07", "A08"),
+	BW.animal = c(0.029, 0.0153, 0.0122, 0.0372),
+	resp.V = c(2.095, 2.094, 2.095, 2.089), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4)
+
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul25_2022_box3_amb_rmr2_analyzed.csv", 
+	AnimalID = c("A09","A10", "A11", NA),
+		BW.animal = c(0.0442, 0.0239, 0.0072, NA),
+	resp.V = c(2.082, 2.088, 2.093, 2.091), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4,
+	drop_ch = c(4))
+
+
+#Climate treatment
+
+
+convert.o2.Firesting(csv.data = "jul26_2022_box1_hot_rmr.csv", units_from = "pct", units_to = "mg/L", channels = c(1,2,3,4), salinity = 0, atm_pressure = 1018, n_ch = 4) #copy to csv_files and change name to make compatible for inventory
+
+
+SMR(data = "jul26_2022_box1_hot_rmr.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned!
+
+
+SMR(data = "jul26_2022_box2_hot_rmr.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned!
+
+
+SMR(data = "jul26_2022_box3_hot_rmr.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned!
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul26_2022_box1_hot_rmr_analyzed.csv", 
+	AnimalID = c("H01","H02", "H03", "H04"),
+	BW.animal = c(0.0199, 0.0138, 0.0115, 0.0133),
+	resp.V = c(2.086, 2.095, 2.089, 2.107), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4)
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul26_2022_box2_hot_rmr_analyzed.csv", 
+	AnimalID = c("H05","H06", "H07", "H08"),
+	BW.animal = c(0.0119, 0.0079, 0.0089, 0.01),
+	resp.V = c(2.095, 2.094, 2.095, 2.089), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4)
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul26_2022_box3_hot_rmr_analyzed.csv", 
+	AnimalID = c("H09","H10", "H11", NA),
+		BW.animal = c(0.0094, 0.0075, 0.0118, NA),
+	resp.V = c(2.082, 2.088, 2.093, 2.091), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4,
+	drop_ch = c(4))
+
+
+SMR(data = "jul27_2022_box1_rmr_imd.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned! 
+
+
+SMR(data = "jul27_2022_box2_imd_rmr.csv",
+    inventory_data = "inventory_buckhollow.csv",
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 0/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders") #cleaned! electrical or some other issues in the night, many traces unusable
+
+
+SMR(data = "jul27_2022_box3_imd_rmr.csv",
+    #inventory_data =,
+    cycle_start = 4,
+    cycle_end = 10,
+    chop_start = 30/60,
+    chop_end = 30/60,
+    flush_plot = "OFF",
+    N_Ch=4, path="UseFolders")
+
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul27_2022_box1_rmr_imd_analyzed.csv", 
+	AnimalID = c("I01","I02", "I03", "I04"),
+	BW.animal = c(0.0484, 0.0167, 0.0264, 0.0192),
+	resp.V = c(2.086, 2.095, 2.089, 2.107), 
+r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4)
+
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul27_2022_box2_imd_rmr_analyzed.csv", 
+	AnimalID = c("I05","I06", "I07", "I08"),
+	BW.animal = c(0.0244, 0.0125, 0.0085, 0.0082),
+	resp.V = c(2.095, 2.094, 2.095, 2.089), 
+	r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4)
+
+
+MMR_SMR_AS_EPOC(
+  test = "none",
+	data.MMR = "none",
+	data.SMR = "jul27_2022_box3_imd_rmr_analyzed.csv", 
+	AnimalID = c("I09","I10", "I11", NA),
+	BW.animal = c(0.0064, 0.0091, 0.009, NA),
+	resp.V = c(2.082, 2.088, 2.093, 2.091), 
+  r2_threshold_smr = 0.9,
+	path = "foldering",
+	date_format = "m/d/y",
+	N_Ch = 4,
+	drop_ch = c(4))
+
+
+
+```
+
