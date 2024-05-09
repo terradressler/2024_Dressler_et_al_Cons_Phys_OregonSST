@@ -1,4 +1,4 @@
-trial_start,ctmax,mmr_temp,treatment
+trial_start_temp,ctmax,mmr_temp,treatment
 19,28.3,19,int_1
 19,28.7,19,int_1
 19,29.3,19,int_1

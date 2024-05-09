@@ -1,4 +1,4 @@
-trial_start,ctmax,mmr_temp,treatment
+trial_start_temp,ctmax,mmr_temp,treatment
 16,28.4,16,ambient
 16,28.5,16,ambient
 16,28.8,16,ambient
