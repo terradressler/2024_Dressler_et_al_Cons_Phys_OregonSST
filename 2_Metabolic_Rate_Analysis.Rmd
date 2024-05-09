@@ -1,0 +1,340 @@
+---
+title: "2_Metabolic_Rate_Analysis"
+author: "Terra Dressler"
+date: "2024-05-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning=F, echo=F)
+```
+
+#### Libraries
+
+```{r}
+
+library(tidyverse)
+library(lme4)
+library(car)
+library(FSA)
+
+```
+
+
+#### Resting (or Routine) Metabolic Rate
+
+Lower Deschutes
+```{r}
+
+#Step 1: Read in RMR data 
+RMR_LD <- read_csv("RMR_LowerDeschutes.csv")
+
+
+#Step 2: Plot all RMR data 
+
+ggplot(RMR_LD, aes(x = temp, y = mean_rmr_72, col = treatment))+
+  geom_point(size = 3, alpha = 0.8)+
+   scale_color_manual(values = c("#FEE391","#EC7014","#993404"), labels=c('Ambient (18-22)', "Intermediate (20-24)", "Warm (23-27)"))+
+  labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
+       x = expression('Temperature ('*~degree*C*')'))+
+   theme_classic()+
+  scale_x_continuous(limits = c(14, 27),breaks = c(14,16,18,20,22,24,26))+
+  scale_y_continuous(limits = c(0,13), breaks = c(0,2,4,6,8,10,12))+
+  theme(axis.text = element_text(size = 18, color = "black"),
+        axis.title = element_text(size =17),
+        legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
+
+
+
+#Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
+
+#start with a linear model
+lmer_LD_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_LD, REML=FALSE) 
+Anova(lmer_LD_1, type = c(3))
+
+#trying an exponential model
+
+lmer_LD_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_LD, REML=FALSE) 
+Anova(lmer_LD_exp_1, type = c(3))
+
+#dropping insignificant interaction between fixed effects
+
+lmer_LD_exp_2 <- lmer(log(mean_rmr_72)~temp + as.factor(treatment) + (1|fish_id), data=RMR_LD, REML=FALSE) 
+Anova(lmer_LD_exp_2, type = c(2)) #significant effects of treatment and acute temp on RMR
+
+BIC(lmer_LD_1,lmer_LD_exp_1, lmer_LD_exp_2) #exponential model WITHOUT the interaction is the best fit
+
+plot(lmer_LD_exp_2)
+hist(resid(lmer_LD_exp_2)) #residuals normally distributed
+
+summary(lmer_LD_exp_2)
+
+#Step 4: RMR comparison at chase/aerobic scope temperatures
+RMR_LD_chase <- RMR_LD %>% 
+  filter(temp==mmr_temp)  
+
+RMR_LD_chase_sum <- RMR_LD_chase %>% 
+  group_by(temp,treatment) %>% 
+  summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
+
+qqPlot(RMR_LD_chase$mean_rmr_72)
+shapiro.test(RMR_LD_chase$mean_rmr_72) #normal distribution
+
+leveneTest(mean_rmr_72~as.factor(temp), data = RMR_LD_chase) #equal variance
+
+summary(aov(mean_rmr_72~as.factor(temp), data = RMR_LD_chase)) #significant differences in RMR 
+
+TukeyHSD(aov(mean_rmr_72~as.factor(temp), data = RMR_LD_chase)) #RMR at 19C significantly lower than 22C and 26C
+
+```
+John Day
+```{r}
+
+#Step 1: Read in RMR data 
+RMR_JD <- read_csv("RMR_JohnDay.csv")
+
+
+#Step 2: Plot all RMR data 
+
+ggplot(RMR_JD, aes(x = temp, y = mean_rmr_72, col = treatment))+
+  geom_point(size = 3, alpha = 0.8)+
+  scale_color_manual(values = c( "#FCC5C0", "#DD3497", "#980043"), labels=c('Ambient (14-27)', "Intermediate (20-24)", "Warm (23-27)"))+
+  labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
+       x = expression('Temperature ('*~degree*C*')'))+
+   theme_classic()+
+  scale_x_continuous(limits = c(14, 27),breaks = c(14,16,18,20,22,24,26))+
+  scale_y_continuous(limits = c(0,13), breaks = c(0,2,4,6,8,10,12))+
+  theme(axis.text = element_text(size = 18, color = "black"),
+        axis.title = element_text(size =17),
+        legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
+
+
+
+#Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
+
+#start with a linear model
+lmer_JD_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_JD, REML=FALSE) 
+Anova(lmer_JD_1, type = c(3))
+
+#dropping insignificant interaction between fixed effects
+lmer_JD_2 <- lmer(mean_rmr_72~temp + as.factor(treatment) + (1|fish_id), data=RMR_JD, REML=FALSE) 
+Anova(lmer_JD_2, type = c(2))
+
+#dropping insignificant effect of temperature treatment
+lmer_JD_3 <- lmer(mean_rmr_72~temp + (1|fish_id), data=RMR_JD, REML=FALSE) 
+Anova(lmer_JD_3, type = c(2)) 
+
+#trying an exponential model
+
+lmer_JD_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_JD, REML=FALSE) 
+Anova(lmer_JD_exp_1, type = c(3)) #significant effects of acute temp, treatment, and their interaction
+
+
+BIC(lmer_JD_1,lmer_JD_2, lmer_JD_3,lmer_JD_exp_1) #exponential model is the best fit
+
+plot(lmer_JD_exp_1)
+hist(resid(lmer_JD_exp_1)) #residuals normally distributed
+
+summary(lmer_JD_exp_1)
+
+#Step 4: RMR comparison at chase/aerobic scope temperatures
+RMR_JD_chase <- RMR_JD %>% 
+  filter(temp==mmr_temp)  
+
+RMR_JD_chase_sum <- RMR_JD_chase %>% 
+  group_by(temp,treatment) %>% 
+  summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
+
+hist(RMR_JD_chase$mean_rmr_74)
+shapiro.test(RMR_JD_chase$mean_rmr_72) # not a normal distribution
+
+leveneTest(mean_rmr_72~as.factor(temp), data = RMR_JD_chase) #unequal variance
+
+kruskal.test(mean_rmr_72~as.factor(temp), data = RMR_JD_chase) #significant differences in RMR 
+
+dunnTest(mean_rmr_72~as.factor(temp), data = RMR_JD_chase) #RMR at 19C significantly lower than 22C and 27C
+
+```
+
+North Umpqua
+```{r}
+
+#Step 1: Read in RMR data 
+RMR_NA <- read_csv("RMR_NorthUmpqua.csv")
+
+
+#Step 2: Plot all RMR data 
+
+ggplot(RMR_NA, aes(x = temp, y = mean_rmr_72, col = treatment))+
+  geom_point(size = 3, alpha = 0.8)+
+ scale_color_manual(values = c("#C6DBEF", "#6BAED6","#2171B5", "#08306B"), labels=c('Ambient (16-19)', "Intermediate (18-22)", "Intermediate (20-24)", "Warm (23-26)"))+
+  labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
+       x = expression('Temperature ('*~degree*C*')'))+
+   theme_classic()+
+  scale_x_continuous(limits = c(14, 27),breaks = c(14,16,18,20,22,24,26))+
+  scale_y_continuous(limits = c(0,13), breaks = c(0,2,4,6,8,10,12))+
+  theme(axis.text = element_text(size = 18, color = "black"),
+        axis.title = element_text(size =17),
+        legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
+
+
+
+#Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
+
+#start with a linear model
+lmer_NA_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
+Anova(lmer_NA_1, type = c(3))
+
+#dropping insignificant interaction between fixed effects
+lmer_NA_2 <- lmer(mean_rmr_72~temp + as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
+Anova(lmer_NA_2, type = c(2))
+
+#trying an exponential model
+
+lmer_NA_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
+Anova(lmer_NA_exp_1, type = c(3)) 
+
+#dropping insignificant interaction between fixed effects
+
+lmer_NA_exp_2 <- lmer(log(mean_rmr_72)~temp +as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
+Anova(lmer_NA_exp_2, type = c(2)) #significant effects of acute temp and treatment
+
+BIC(lmer_NA_1,lmer_NA_2,lmer_NA_exp_1,lmer_NA_exp_2) #exponential model with no interaction is the best fit
+
+plot(lmer_NA_exp_2)
+hist(resid(lmer_NA_exp_2)) #residuals normally distributed
+
+summary(lmer_NA_exp_2)
+
+#Step 4: RMR comparison at chase/aerobic scope temperatures
+RMR_NA_chase <- RMR_NA %>% 
+  filter(temp==mmr_temp)  
+
+RMR_NA_chase_sum <- RMR_NA_chase %>% 
+  group_by(temp,treatment) %>% 
+  summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
+
+hist(RMR_NA_chase$mean_rmr_72)
+shapiro.test(RMR_NA_chase$mean_rmr_72) # normal distribution
+
+leveneTest(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #unequal variance
+
+kruskal.test(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #significant differences in RMR between chase temps
+
+dunnTest(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #RMR increases between 19 & 22
+s
+```
+
+
+Siletz
+```{r} 
+
+#Step 1: Read in RMR data 
+RMR_S <- read_csv("RMR_Siletz.csv")
+
+
+#Step 2: Plot all RMR data 
+
+ggplot(RMR_S, aes(x = temp, y = mean_rmr_72, col = treatment))+
+  geom_point(size = 3, alpha = 0.8)+
+ scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"), labels=c('Ambient (15-19)', "Intermediate (18-22)", "Intermediate (20-24)", "Warm (23-26)"))+
+  labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
+       x = expression('Temperature ('*~degree*C*')'))+
+   theme_classic()+
+  scale_x_continuous(limits = c(14, 27),breaks = c(14,16,18,20,22,24,26))+
+  scale_y_continuous(limits = c(0,13), breaks = c(0,2,4,6,8,10,12))+
+  theme(axis.text = element_text(size = 18, color = "black"),
+        axis.title = element_text(size =17),
+        legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
+
+
+
+#Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
+
+#start with a linear model
+lmer_S_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_S, REML=FALSE) 
+Anova(lmer_S_1, type = c(3))
+
+#trying an exponential model
+
+lmer_S_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_S, REML=FALSE) 
+Anova(lmer_S_exp_1, type = c(3)) #significant effects of acute temp and treatment and their interaction
+
+
+BIC(lmer_S_1,lmer_S_exp_1) #exponential model is the best fit
+
+plot(lmer_S_exp_1)
+hist(resid(lmer_S_exp_1)) #residuals normally distributed
+
+summary(lmer_S_exp_1)
+
+#Step 4: RMR comparison at chase/aerobic scope temperatures
+RMR_S_chase <- RMR_S %>% 
+  filter(temp==mmr_temp)  
+
+RMR_S_chase_sum <- RMR_S_chase %>% 
+  group_by(temp,treatment) %>% 
+  summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
+
+hist(RMR_S_chase$mean_rmr_72)
+shapiro.test(RMR_S_chase$mean_rmr_72) # normal distribution
+
+leveneTest(mean_rmr_72~as.factor(temp), data = RMR_S_chase) #equal variance
+
+summary(aov(mean_rmr_72~as.factor(temp), data = RMR_S_chase)) #significant differences in RMR between chase temps
+
+TukeyHSD(aov(mean_rmr_72~as.factor(temp), data = RMR_S_chase)) #significant differences between all temps except 19&22
+
+```
+
+
+#### Maximum Metabolic Rate (MMR)
+
+Lower Deschutes
+
+```{r}
+
+#Step 1: read in MMR data, get means & SEMs
+MMR_LD <- read_csv("MMR_LD.csv")
+
+MMR_LD_sum <- MMR_BH %>% 
+  group_by(Temp) %>% 
+  summarise(mean_MMR = mean(mmr_scaled), sem_MMR = sd(mmr_scaled)/sqrt(n()))
+
+#Step 2: plot MMR data
+
+ggplot(MMR_BH, aes(x = as.factor(Temp) , y = mmr_scaled, color = as.factor(Temp))) +
+  geom_boxplot(width = 0.4)+
+  geom_point(size = 2.5, alpha = 0.8)+
+  scale_x_discrete(name = expression("Temperature " ( degree*C)))+
+   scale_color_manual(values = c( "#FEE391", "#EC7014" ,"#993404"))+
+  ylab(expression(paste('MMR '(mg*O[2] * kg^-1 * min^-1))))+
+  scale_y_continuous(limits= c(0, 20))+
+  theme_classic()+
+  theme(text =element_text(size=18, colour= 'black'),
+        axis.text = element_text(size=18, colour= 'black'),
+        aspect.ratio = 0.9, legend.position = "none")
+
+#Step 3: Statistics to test for differences in MMR between temperatures
+
+qqnorm(MMR_BH$mmr_scaled)
+shapiro.test(MMR_BH$mmr_scaled)
+
+#normal distribution
+
+leveneTest(mmr_scaled~as.factor(Temp), data = MMR_BH)
+
+#equal variance
+
+BH_MMR_aov <- aov(mmr_scaled~as.factor(Temp), data = MMR_BH)
+summary(BH_MMR_aov)
+TukeyHSD(BH_MMR_aov)
+
+#MMR is statistically different between temperatures
+
+#Step 5: get means and SEMs for table
+
+
+```
+
+
