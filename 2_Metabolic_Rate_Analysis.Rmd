@@ -299,15 +299,15 @@ Lower Deschutes
 ```{r}
 
 #Step 1: read in MMR data, get means & SEMs
-MMR_LD <- read_csv("MMR_LD.csv")
+MMR_LD <- read_csv("MMR_LowerDeschutes.csv")
 
-MMR_LD_sum <- MMR_BH %>% 
-  group_by(Temp) %>% 
-  summarise(mean_MMR = mean(mmr_scaled), sem_MMR = sd(mmr_scaled)/sqrt(n()))
+MMR_LD_sum <- MMR_LD %>% 
+  group_by(temperature) %>% 
+  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
 
 #Step 2: plot MMR data
 
-ggplot(MMR_BH, aes(x = as.factor(Temp) , y = mmr_scaled, color = as.factor(Temp))) +
+ggplot(MMR_LD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
   geom_boxplot(width = 0.4)+
   geom_point(size = 2.5, alpha = 0.8)+
   scale_x_discrete(name = expression("Temperature " ( degree*C)))+
@@ -321,22 +321,19 @@ ggplot(MMR_BH, aes(x = as.factor(Temp) , y = mmr_scaled, color = as.factor(Temp)
 
 #Step 3: Statistics to test for differences in MMR between temperatures
 
-qqnorm(MMR_BH$mmr_scaled)
-shapiro.test(MMR_BH$mmr_scaled)
+qqPlot(MMR_LD$mmr_scaled_74)
 
 #normal distribution
 
-leveneTest(mmr_scaled~as.factor(Temp), data = MMR_BH)
+leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_LD)
 
 #equal variance
 
-BH_MMR_aov <- aov(mmr_scaled~as.factor(Temp), data = MMR_BH)
-summary(BH_MMR_aov)
-TukeyHSD(BH_MMR_aov)
+LD_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_LD)
+summary(LD_MMR_aov)
+TukeyHSD(LD_MMR_aov)
 
-#MMR is statistically different between temperatures
-
-#Step 5: get means and SEMs for table
+#MMR is statistically different between 19 and 22 and between 19 and 26
 
 
 ```
@@ -344,17 +341,123 @@ TukeyHSD(BH_MMR_aov)
 John Day
 ```{r}
 
+#Step 1: read in MMR data, get means & SEMs
+MMR_JD <- read_csv("MMR_JohnDay.csv")
+
+MMR_JD_sum <- MMR_JD %>% 
+  group_by(temperature) %>% 
+  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+
+#Step 2: plot MMR data
+
+ggplot(MMR_JD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+  geom_boxplot(width = 0.4)+
+  geom_point(size = 2.5, alpha = 0.8)+
+  scale_x_discrete(name = expression("Temperature " ( degree*C)))+
+   scale_color_manual(values = c(  "#FCC5C0", "#DD3497", "#980043"))+
+  ylab(expression(paste('MMR '(mg*O[2] * kg^-1 * min^-1))))+
+  scale_y_continuous(limits= c(0, 20))+
+  theme_classic()+
+  theme(text =element_text(size=18, colour= 'black'),
+        axis.text = element_text(size=18, colour= 'black'),
+        aspect.ratio = 0.9, legend.position = "none")
+
+#Step 3: Statistics to test for differences in MMR between temperatures
+
+qqPlot(MMR_JD$mmr_scaled_74)
+
+#normal distribution
+
+leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_JD)
+
+#equal variance
+
+JD_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_JD)
+summary(JD_MMR_aov)
+
+#MMR is not statistically different between 19, 22, and 27
+
 ```
 
 North Umpqua
 ```{r}
+
+#Step 1: read in MMR data, get means & SEMs
+MMR_NU <- read_csv("MMR_NorthUmpqua.csv")
+
+MMR_NU_sum <- MMR_NU %>% 
+  group_by(temperature) %>% 
+  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+
+#Step 2: plot MMR data
+
+ggplot(MMR_NU, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+  geom_boxplot(width = 0.4)+
+  geom_point(size = 2.5, alpha = 0.8)+
+  scale_x_discrete(name = expression("Temperature " ( degree*C)))+
+   scale_color_manual(values = c("#C6DBEF", "#6BAED6","#2171B5", "#08306B"))+
+  ylab(expression(paste('MMR '(mg*O[2] * kg^-1 * min^-1))))+
+  scale_y_continuous(limits= c(0, 20))+
+  theme_classic()+
+  theme(text =element_text(size=18, colour= 'black'),
+        axis.text = element_text(size=18, colour= 'black'),
+        aspect.ratio = 0.9, legend.position = "none")
+
+#Step 3: Statistics to test for differences in MMR between temperatures
+
+qqPlot(MMR_NU$mmr_scaled_74)
+
+#normal distribution
+
+leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_NU)
+
+#equal variance
+
+NU_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_NU)
+summary(NU_MMR_aov)
+
+#MMR is not statistically different between 16, 19, 22, and 25
 
 ```
 
 Siletz
 
 ```{r}
+#Step 1: read in MMR data, get means & SEMs
+MMR_S <- read_csv("MMR_Siletz.csv")
 
+MMR_S_sum <- MMR_S %>% 
+  group_by(temperature) %>% 
+  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+
+#Step 2: plot MMR data
+
+ggplot(MMR_S, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+  geom_boxplot(width = 0.4)+
+  geom_point(size = 2.5, alpha = 0.8)+
+  scale_x_discrete(name = expression("Temperature " ( degree*C)))+
+   scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"))+
+  ylab(expression(paste('MMR '(mg*O[2] * kg^-1 * min^-1))))+
+  scale_y_continuous(limits= c(0, 20))+
+  theme_classic()+
+  theme(text =element_text(size=18, colour= 'black'),
+        axis.text = element_text(size=18, colour= 'black'),
+        aspect.ratio = 0.9, legend.position = "none")
+
+#Step 3: Statistics to test for differences in MMR between temperatures
+
+qqPlot(MMR_S$mmr_scaled_74)
+
+#not a normal distribution
+
+leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_S)
+
+#equal variance
+
+S_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_S)
+summary(S_MMR_aov)
+
+#MMR is not statistically different between 16, 19, 22, and 25
 ```
 
 
