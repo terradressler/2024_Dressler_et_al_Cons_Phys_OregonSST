@@ -1,0 +1,144 @@
+---
+title: "0_Scaling_Metabolic_Rate"
+author: "Terra Dressler"
+date: "2024-05-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This RMD contains analysis that generated body weight scaling exponents for juvenile O. mykiss metabolic rate data. Metabolic rate data from 4 populations of Oregon O. mykiss and 2 populations of California O.mykiss (from Dressler et al. 2023; https://doi.org/10.1038/s41598-023-41173-7). 
+
+The following analysis generates mass scaling exponents for maximum metabolic rate (MMR) and for resting (or routine) metabolic rate(RMR).
+
+#### Libraries
+
+```{r}
+
+library(tidyverse)
+library(lme4)
+library(ggpubr)
+
+```
+
+
+#### Mass Scaling: Maximum Metabolic Rate (MMR)
+
+```{r}
+
+#Step 1: Load Data
+
+MMR_LD <- read_csv("MMR_LowerDeschutes.csv")
+MMR_JD <- read_csv("MMR_JohnDay.csv")
+MMR_NU <- read_csv("MMR_NorthUmpqua.csv")
+MMR_S <- read_csv("MMR_Siletz.csv")
+MMR_CA <- read_csv("MMR_California.csv")
+
+MMR_All <- rbind(MMR_LD, MMR_JD, MMR_NU, MMR_S, MMR_CA)
+
+#Step 2: plot unscaled MMR values on a log-log scale
+
+ggplot(MMR_All, aes(x = log10(bw), y = log10(mmr_unscaled), color = population))+
+  geom_point()+
+  theme_classic()+
+  labs(x = "Log Body Weight (kg)", y = "Log MMR (mgO2/min)")+
+  theme(text = element_text(size = 14))
+
+ggplot(MMR_All, aes(x = log10(bw), y = log10(mmr_unscaled), color = temperature))+
+  geom_point()+
+  theme_classic()+
+  labs(x = "Log Body Weight (kg)", y = "Log MMR (mgO2/min)")+
+  theme(text = element_text(size = 14))
+
+#Step 3: model fitting
+
+MMR_no_scaling <- lm(log10(mmr_unscaled)~1, data = MMR_All)
+MMR_isometric <- lm(log10(mmr_unscaled)~offset(1*log10(bw)), data = MMR_All)
+MMR_allometric_89 <- lm(log10(mmr_unscaled)~offset(0.89*log10(bw)), data = MMR_All)
+MMR_allometric_data <- lm(log10(mmr_unscaled)~log10(bw), data = MMR_All)
+MMR_allometric_site <- lm(log10(mmr_unscaled)~log10(bw) + population, data = MMR_All) #best
+MMR_allometric_site2 <- lm(log10(mmr_unscaled)~log10(bw) * population, data = MMR_All)
+MMR_allometric_Temp <- lm(log10(mmr_unscaled)~log10(bw) + temperature, data = MMR_All)
+MMR_allometric_Temp2 <- lm(log10(mmr_unscaled)~log10(bw) * temperature, data = MMR_All)
+
+BIC(MMR_no_scaling, MMR_isometric,MMR_allometric_89, MMR_allometric_data , MMR_allometric_site,MMR_allometric_site2, MMR_allometric_Temp, MMR_allometric_Temp2)
+
+summary(MMR_allometric_site) #scaling exponent: 0.74
+
+
+
+```
+
+
+#### Mass Scaling: Resting Metabolic Rate (RMR)
+
+```{r}
+
+#Step 1: Load Data
+
+RMR_LD <- read_csv("RMR_LowerDeschutes.csv") %>% 
+  select(fish_id, treatment,temp,mean_rmr_unscaled,bw) %>% 
+  mutate(population="Lower Deschutes", fish_id=paste0("LD_", fish_id))
+RMR_JD <- read_csv("RMR_JohnDay.csv") %>% 
+  select(fish_id, treatment,temp,mean_rmr_unscaled,bw) %>% 
+  mutate(population="John Day", fish_id=paste0("JD_", fish_id))
+RMR_NU <- read_csv("RMR_NorthUmpqua.csv") %>%
+  select(fish_id, treatment,temp,mean_rmr_unscaled,bw) %>% 
+  mutate(population="North Umpqua", fish_id=paste0("NU_", fish_id))
+RMR_S <- read_csv("RMR_Siletz.csv") %>% 
+  select(fish_id, treatment,temp,mean_rmr_unscaled,bw) %>% 
+  mutate(population="Siletz", fish_id=paste0("S_", fish_id))
+RMR_CA <- read_csv("RMR_California.csv") %>% 
+  filter(n>2) %>% 
+  select(fish_id, treatment,temp,mean_rmr_unscaled, population,bw)
+
+RMR_All <- rbind(RMR_LD, RMR_JD, RMR_NU, RMR_S, RMR_CA)
+
+#Step 2: plot unscaled RMR values on a log-log scale
+
+ggplot(RMR_All, aes(x = log10(bw), y = log10(mean_rmr_unscaled)))+
+  geom_point()+
+  theme_classic()+
+  labs(x = "Log Body Weight (kg)", y = "Log RMR (mgO2/min)")+
+  theme(text = element_text(size=14))+
+  stat_smooth(method="lm")+
+  stat_regline_equation()
+
+ggplot(RMR_All, aes(x = log10(bw), y = log10(mean_rmr_unscaled), color = population))+
+  geom_point()+
+  theme_classic()+
+  labs(x = "Log Body Weight (kg)", y = "Log RMR (mgO2/min)")+
+  theme(text = element_text(size=14))
+
+ggplot(RMR_All, aes(x = log10(bw), y = log10(mean_rmr_unscaled), color = temp))+
+  geom_point()+
+  theme_classic()+
+  labs(x = "Log Body Weight (kg)", y = "Log RMR (mgO2/min)")+
+  theme(text = element_text(size=14))
+
+#Model fitting: using linear mixed models to account for repeated measures of individual fish
+
+RMR_no_scaling <- lmer(log10(mean_rmr_unscaled)~1 + (1|fish_id), data = RMR_All)
+RMR_isometric <- lmer(log10(mean_rmr_unscaled)~offset(1*log10(bw))+ (1|fish_id), data = RMR_All)
+RMR_allometric_89 <- lmer(log10(mean_rmr_unscaled)~offset(0.89*log10(bw))+ (1|fish_id), data = RMR_All)
+RMR_allometric_data <- lmer(log10(mean_rmr_unscaled)~log10(bw)+ (1|fish_id), data = RMR_All)
+RMR_allometric_site <- lmer(log10(mean_rmr_unscaled)~log10(bw) + population+ (1|fish_id), data =RMR_All)
+RMR_allometric_site2 <- lmer(log10(mean_rmr_unscaled)~log10(bw) * population+ (1|fish_id), data = RMR_All)
+RMR_allometric_Temp <- lmer(log10(mean_rmr_unscaled)~log10(bw) + temp +(1|fish_id), data = RMR_All)
+RMR_allometric_Temp2 <- lmer(log10(mean_rmr_unscaled)~log10(bw) * temp + (1|fish_id), data = RMR_All)
+RMR_allometric_site_temp <- lmer(log10(mean_rmr_unscaled)~log10(bw) + temp + population+ (1|fish_id), data = RMR_All) #best
+RMR_allometric_site_temp2 <- lmer(log10(mean_rmr_unscaled)~log10(bw) * temp * population+ (1|fish_id), data = RMR_All)
+RMR_allometric_site_temp4 <- lmer(log10(mean_rmr_unscaled)~log10(bw) * temp + population+ (1|fish_id), data = RMR_All)#best2
+
+BIC(RMR_no_scaling, RMR_isometric,RMR_allometric_89, RMR_allometric_data , RMR_allometric_site,RMR_allometric_site2, RMR_allometric_Temp, RMR_allometric_Temp2, RMR_allometric_site_temp, RMR_allometric_site_temp2, RMR_allometric_site_temp4)
+
+BIC(RMR_allometric_site_temp, RMR_allometric_site_temp4)
+
+summary(RMR_allometric_site_temp) #scaling exponent = 0.72
+
+summary(RMR_allometric_site_temp4) #interaction is weak (0.019991), but present and positive. Evidence of constrained scope with body size for this species??? Slope gets steeper as temperature gets warmer. BIC comparisons justify using 1 scaling exponent (within BIC delta 7)
+
+```
+
