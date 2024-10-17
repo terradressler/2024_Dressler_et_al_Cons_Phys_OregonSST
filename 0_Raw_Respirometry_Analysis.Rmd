@@ -261,8 +261,9 @@ SMR(data = "jul25_2022_box3_amb_rmr2.csv",
      date_format = "m/d/y",
     N_Ch=4, path="UseFolders") #cleaned! Using ch 1, 2, 3 (some bad traces in 3, using 0.9 threshold)
 
+Analyzed_files <- "MMR_SMR_AS_EPOC/csv_input_files"
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -276,7 +277,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4,
 	drop_ch = c(4))
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -290,7 +291,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4)
 
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -342,6 +343,7 @@ SMR(data = "jul26_2022_box3_hot_rmr.csv",
     N_Ch=4, path="UseFolders") #cleaned!
 
 
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -354,7 +356,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "m/d/y",
 	N_Ch = 4)
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -367,7 +369,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "m/d/y",
 	N_Ch = 4)
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -412,7 +414,7 @@ SMR(data = "jul27_2022_box3_imd_rmr.csv",
     N_Ch=4, path="UseFolders")
 
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -426,7 +428,7 @@ r2_threshold_smr = 0.9,
 	N_Ch = 4)
 
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -439,7 +441,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "m/d/y",
 	N_Ch = 4)
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -456,8 +458,8 @@ MMR_SMR_AS_EPOC(
 
 
 ```
-John Day
 
+John Day
 ```{r}
 
 #Ambient Treatment - Round 1
@@ -488,7 +490,7 @@ SMR(data = "jul12_box3_rmr_18.csv",
 
 #Channels 2 and 3 only
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul12_box2_rmr_18_analyzed.csv", 
@@ -502,7 +504,7 @@ MMR_SMR_AS_EPOC(
 	drop_ch = c(1,2))
 
 
-
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul12_box3_rmr_18_analyzed.csv", 
@@ -552,7 +554,7 @@ SMR(data = "jul14_box3_rmr_18.csv",
 #Omitting channel 2 
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul14_box1_rmr_18_analyzed.csv", 
@@ -575,7 +577,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4,
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul14_box2_rmr_18_analyzed.csv", 
@@ -597,7 +599,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "m/d/y",
 	N_Ch = 4)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul14_box3_rmr_18_analyzed.csv", 
@@ -654,7 +656,7 @@ SMR(data = "jul15_box3_rmr_22.csv",
 
 #Channel 4 did not work, omitting
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul15_box1_rmr_22_analyzed.csv", 
@@ -677,7 +679,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4,
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul15_box2_rmr_22_analyzed.csv", 
@@ -699,7 +701,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "m/d/y",
 	N_Ch = 4)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul15_box3_rmr_22_analyzed.csv", 
@@ -755,7 +757,7 @@ SMR(data = "jul13_box3_rmr_26.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul13_box1_rmr_26_analyzed.csv", 
@@ -768,7 +770,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4,
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul13_box2_rmr_26_analyzed.csv", 
@@ -780,7 +782,7 @@ MMR_SMR_AS_EPOC(
 	date_format = "y/m/d",
 	N_Ch = 4)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/John Day/2021_BridgeCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "jul13_box3_rmr_26_analyzed.csv", 
@@ -832,7 +834,7 @@ SMR(data = "aug08_2022_box1_amb_rmr3.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -862,7 +864,7 @@ MMR_SMR_AS_EPOC(
 #	N_Ch = 4,
 	#drop_ch = 4) #can't get this to run, but only 2 cycles so omitting
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
  test = "none",
 	data.MMR = "none",
@@ -880,7 +882,7 @@ MMR_SMR_AS_EPOC(
 
 
 #Box 2 - channel 2 fish unwell, released
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box2_amb_rmr.csv",
     "inventory_steamboat_amb1.csv",
     cycle_start = 4,
@@ -890,7 +892,7 @@ SMR(data = "aug08_2022_box2_amb_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box2_amb_rmr2.csv",
     "inventory_steamboat_amb2.csv",
     cycle_start = 3,
@@ -900,7 +902,7 @@ SMR(data = "aug08_2022_box2_amb_rmr2.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box2_amb_rmr3.csv",
     inventory_data = "inventory_steamboat_amb3.csv",
     cycle_start = 5,
@@ -910,7 +912,7 @@ SMR(data = "aug08_2022_box2_amb_rmr3.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -938,7 +940,7 @@ MMR_SMR_AS_EPOC(
 #	date_format = "m/d/y",
 #	N_Ch = 4, drop_ch = c(2))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -954,7 +956,7 @@ MMR_SMR_AS_EPOC(
 
 
 #Box 3
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box3_amb_rmr.csv",
     "inventory_steamboat_amb1.csv",
     cycle_start = 4,
@@ -964,7 +966,7 @@ SMR(data = "aug08_2022_box3_amb_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box3_amb_rmr2.csv",
  #  "inventory_steamboat_amb2.csv",
     cycle_start = 3,
@@ -974,7 +976,7 @@ SMR(data = "aug08_2022_box3_amb_rmr2.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #no cleaning necessary
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug08_2022_box3_amb_rmr3.csv",
     inventory_data = "inventory_steamboat_amb3.csv",
     cycle_start = 5,
@@ -985,7 +987,7 @@ SMR(data = "aug08_2022_box3_amb_rmr3.csv",
     N_Ch=4, path="UseFolders") #cleaned!
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -1013,7 +1015,7 @@ MMR_SMR_AS_EPOC(
 #	date_format = "m/d/y",
 #	N_Ch = 4)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test = "none",
 	data.MMR = "none",
@@ -1030,7 +1032,7 @@ MMR_SMR_AS_EPOC(
 #Climate
 
 #Box 1
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug09_2022_box1_hot_rmr.csv", #ch4 is background
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1040,7 +1042,7 @@ SMR(data = "aug09_2022_box1_hot_rmr.csv", #ch4 is background
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1054,7 +1056,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4, drop_ch = 4)
 
 #Box 2
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug09_2022_box2_hot_rmr.csv",
    inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1064,7 +1066,7 @@ SMR(data = "aug09_2022_box2_hot_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1078,7 +1080,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4)
 
 #Box3
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug09_2022_box3_hot_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1088,7 +1090,7 @@ SMR(data = "aug09_2022_box3_hot_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1104,7 +1106,7 @@ MMR_SMR_AS_EPOC(
 #Intermediate - MMR temp 22C
 
 #Box1
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug10_2022_box1_22_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1114,7 +1116,7 @@ SMR(data = "aug10_2022_box1_22_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1128,7 +1130,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4, drop_ch = 4)
 
 #Box2
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug10_2022_box2_22_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1139,7 +1141,7 @@ SMR(data = "aug10_2022_box2_22_rmr.csv",
     N_Ch=4, path="UseFolders") #cleaned!
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1153,7 +1155,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4)
 
 #Box3
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug10_2022_box3_22_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1164,7 +1166,7 @@ SMR(data = "aug10_2022_box3_22_rmr.csv",
     N_Ch=4, path="UseFolders") #cleaned!
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
    test= "none",
 	data.MMR = "none",
@@ -1180,7 +1182,7 @@ MMR_SMR_AS_EPOC(
 #Intermediate - MMR temp 19C
 
 #Box1
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug11_2022_box1_19_rmr.csv",
    inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1190,7 +1192,7 @@ SMR(data = "aug11_2022_box1_19_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
   test= "none",
 	data.MMR = "none",
@@ -1204,7 +1206,7 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4, drop_ch = 4)
 
 #Box2
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug11_2022_box2_19_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1215,7 +1217,7 @@ SMR(data = "aug11_2022_box2_19_rmr.csv",
     N_Ch=4, path="UseFolders") #cleaned!
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
    test= "none",
 	data.MMR = "none",
@@ -1230,7 +1232,7 @@ MMR_SMR_AS_EPOC(
 
 #Box 3 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug11_2022_box3_19_rmr.csv",
     inventory_data = "inventory_Steamboat.csv",
     cycle_start = 4,
@@ -1240,7 +1242,7 @@ SMR(data = "aug11_2022_box3_19_rmr.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #cleaned!
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Umpqua/2022_SteamboatCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
    test= "none",
 	data.MMR = "none",
@@ -1254,16 +1256,14 @@ MMR_SMR_AS_EPOC(
 	N_Ch = 4)
 
 
-
 ```
 
 Siletz
-
 ```{r}
 
 #Ambient Treatment
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug13_box1_rmr_amb.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1273,7 +1273,7 @@ SMR(data = "aug13_box1_rmr_amb.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug13_box2_rmr_amb.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1283,7 +1283,7 @@ SMR(data = "aug13_box2_rmr_amb.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug13_box3_rmr_amb.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1293,7 +1293,7 @@ SMR(data = "aug13_box3_rmr_amb.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders") #not using ch4, not enough good traces
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug13_box1_rmr_amb_analyzed.csv", 
@@ -1304,7 +1304,7 @@ MMR_SMR_AS_EPOC(
 	path = "foldering",
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug13_box2_rmr_amb_analyzed.csv", 
@@ -1316,7 +1316,7 @@ MMR_SMR_AS_EPOC(
 	path = "foldering",
 	recovMMR_threshold = 0.5)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug13_box3_rmr_amb_analyzed.csv", 
@@ -1331,7 +1331,7 @@ MMR_SMR_AS_EPOC(
 
 #20-24 treatment
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug14_box1_rmr_22.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1341,7 +1341,7 @@ SMR(data = "aug14_box1_rmr_22.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug14_box2_rmr_22.csv",
    inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1351,7 +1351,7 @@ SMR(data = "aug14_box2_rmr_22.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug14_box3_rmr_22.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1362,7 +1362,7 @@ SMR(data = "aug14_box3_rmr_22.csv",
     N_Ch=4, path="UseFolders")
 
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug14_box1_rmr_22_analyzed.csv", 
@@ -1375,7 +1375,7 @@ MMR_SMR_AS_EPOC(
 	path = "foldering",
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug14_box2_rmr_22_analyzed.csv", 
@@ -1387,7 +1387,7 @@ MMR_SMR_AS_EPOC(
 		path = "foldering",
 	recovMMR_threshold = 0.5)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug14_box3_rmr_22_analyzed.csv", 
@@ -1401,7 +1401,7 @@ MMR_SMR_AS_EPOC(
 	drop_ch = c(3)) #keep ch4??? 
 
 #18-22 treatment
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug15_box1_rmr_20.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1411,7 +1411,7 @@ SMR(data = "aug15_box1_rmr_20.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug15_box2_rmr_20.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1421,7 +1421,7 @@ SMR(data = "aug15_box2_rmr_20.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug15_box3_rmr_20.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1431,7 +1431,7 @@ SMR(data = "aug15_box3_rmr_20.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug15_box1_rmr_20_analyzed.csv", 
@@ -1444,7 +1444,7 @@ MMR_SMR_AS_EPOC(
 		path = "foldering",
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug15_box2_rmr_20_analyzed.csv", 
@@ -1456,7 +1456,7 @@ MMR_SMR_AS_EPOC(
 		path = "foldering",
 	recovMMR_threshold = 0.5)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug15_box3_rmr_20_analyzed.csv", 
@@ -1471,7 +1471,7 @@ MMR_SMR_AS_EPOC(
 
 
 #23-26 treatment
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug16_box1_rmr_24.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1481,7 +1481,7 @@ SMR(data = "aug16_box1_rmr_24.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug16_box2_rmr_24.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1491,7 +1491,7 @@ SMR(data = "aug16_box2_rmr_24.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/AUTO/csv_files")
+setwd(AUTO_csv_files)
 SMR(data = "aug16_box3_rmr_24.csv",
     inventory_data = "Gravel_Inventory.csv",
     cycle_start = 4,
@@ -1501,7 +1501,7 @@ SMR(data = "aug16_box3_rmr_24.csv",
     flush_plot = "OFF",
     N_Ch=4, path="UseFolders")
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug16_box1_rmr_24_analyzed.csv", 
@@ -1514,7 +1514,7 @@ MMR_SMR_AS_EPOC(
 		path = "foldering",
 	drop_ch = c(1))
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug16_box2_rmr_24_analyzed.csv", 
@@ -1527,7 +1527,7 @@ MMR_SMR_AS_EPOC(
 	recovMMR_threshold = 0.5,
 	drop_ch = 2)
 
-setwd("C:/Users/terra/Box Sync/SummerSteelhead_ThermalTolerance2/Siletz/2021_GravelCreek/MMR_SMR_AS_EPOC/csv_input_files")
+setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
 	data.MMR = "none",
 	data.SMR = "aug16_box3_rmr_24_analyzed.csv", 
