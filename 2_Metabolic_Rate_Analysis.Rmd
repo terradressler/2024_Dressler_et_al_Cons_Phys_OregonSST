@@ -23,7 +23,7 @@ library(ggpubr)
 ```
 
 
-#### Resting (or Routine) Metabolic Rate
+#### 1. Resting (or Routine) Metabolic Rate
 
 Lower Deschutes
 ```{r}
@@ -393,7 +393,7 @@ TukeyHSD(aov(mean_rmr_72~population, data = RMR_24)) #John Day and Deschutes hav
 ```
 
 
-#### Maximum Metabolic Rate (MMR)
+#### 2. Maximum Metabolic Rate (MMR)
 
 Lower Deschutes
 
@@ -562,7 +562,7 @@ summary(S_MMR_aov)
 
 
 
-#### Aerobic Scope - Absolulte (AAS) and Factorial (FAS)
+#### 3. Aerobic Scope - Absolulte (AAS) and Factorial (FAS)
 
 Lower Deschutes 
 ```{r}
