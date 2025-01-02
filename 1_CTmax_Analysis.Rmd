@@ -27,13 +27,13 @@ CT_LD <- read_csv("CTmax_LowerDeschutes.csv")  %>%
   mutate(population="Lower Deschutes")
 
 CT_LD_sum<- CT_LD %>% 
-  group_by(treatment) %>% 
+  group_by(treatment, trial_start_temp) %>% 
   summarise(mean_CT = mean(ctmax), sem = sd(ctmax)/sqrt(n()), min = min(ctmax), max = max(ctmax))
 
 #Step 2: Plot
 
-ggplot(CT_LD, aes(x = treatment, y = ctmax, color = as.factor(treatment)))+
-geom_pointrange(data= CT_LD_sum, aes(y = mean_CT, x=treatment, ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
+ggplot(CT_LD, aes(x = as.factor(trial_start_temp), y = ctmax, color = as.factor(trial_start_temp)))+
+geom_pointrange(data= CT_LD_sum, aes(y = mean_CT, x=as.factor(trial_start_temp), ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
   geom_point(size = 2, alpha = 0.8)+
   scale_y_continuous(limits = c(27, 33),breaks=c(27,28, 29,30,31,32,33))+
   scale_color_manual(values = c("#FEE391", "#EC7014" ,"#993404"))+
@@ -71,13 +71,13 @@ CT_JD <- read_csv("CTmax_JohnDay.csv")%>%
 
 
 CT_JD_sum<- CT_JD %>% 
-  group_by(treatment) %>% 
+  group_by(treatment, trial_start_temp) %>% 
   summarise(mean_CT = mean(ctmax), sem = sd(ctmax)/sqrt(n()), min = min(ctmax), max = max(ctmax))
 
 #Step 2: Plot
 
-ggplot(CT_JD, aes(x = treatment, y = ctmax, color = as.factor(treatment)))+
-geom_pointrange(data= CT_JD_sum, aes(y = mean_CT, x=treatment, ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
+ggplot(CT_JD, aes(x = as.factor(trial_start_temp), y = ctmax, color = as.factor(trial_start_temp)))+
+geom_pointrange(data= CT_JD_sum, aes(y = mean_CT, x=as.factor(trial_start_temp), ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
   geom_point(size = 2, alpha = 0.8)+
   scale_y_continuous(limits = c(27, 33),breaks=c(27,28, 29,30,31,32,33))+
   scale_color_manual(values = c("#FCC5C0", "#980043"))+
@@ -100,18 +100,18 @@ t.test(ctmax~as.factor(treatment), data = CT_JD, var.equal = TRUE) #no significa
 ```{r}
 
 #Step 1: read in data, get means and SEMs
-CT_NA <- read_csv("CTmax_NorthUmpqua.csv") %>% 
+CT_NU <- read_csv("CTmax_NorthUmpqua.csv") %>% 
   mutate(population="North Umpqua")
 
 
-CT_NA_sum <- CT_NA %>% 
-  group_by(treatment) %>% 
+CT_NU_sum <- CT_NU %>% 
+  group_by(treatment,trial_start_temp) %>% 
   summarise(mean_CT = mean(ctmax), sem = sd(ctmax)/sqrt(n()))
 
 #Step 2: Plot
 
-ggplot(CT_NA, aes(x = treatment, y = ctmax,color = as.factor(treatment)))+
-  geom_pointrange(data= CT_NA_sum, aes(y = mean_CT, x=treatment, ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
+ggplot(CT_NU, aes(x = as.factor(trial_start_temp), y = ctmax,color = as.factor(trial_start_temp)))+
+  geom_pointrange(data= CT_NU_sum, aes(y = mean_CT, x=as.factor(trial_start_temp), ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
    geom_point(size = 2, alpha = 0.8)+
   scale_y_continuous(limits = c(27, 33),breaks=c(27,28, 29,30,31,32,33))+
   scale_color_manual(values = c("#C6DBEF", "#6BAED6","#2171B5", "#08306B"))+
@@ -120,16 +120,16 @@ ggplot(CT_NA, aes(x = treatment, y = ctmax,color = as.factor(treatment)))+
 
 #Step 3: Statistics
 
-qqPlot(CT_NA$ctmax)
-shapiro.test(CT_NA$ctmax) #not normal dist
+qqPlot(CT_NU$ctmax)
+shapiro.test(CT_NU$ctmax) #not normal dist
 
-leveneTest(ctmax~treatment, data = CT_NA) #equal var
+leveneTest(ctmax~treatment, data = CT_NU) #equal var
 
 #N>30, applying Critical Limit Theorem
  
-summary(aov(ctmax~treatment, data = CT_NA)) #no significant differences between CTmax at different temps
+summary(aov(ctmax~treatment, data = CT_NU)) #no significant differences between CTmax at different holding temps
 
-kruskal.test(ctmax~treatment, data = CT_NA) #same result with non-parametric test
+kruskal.test(ctmax~treatment, data = CT_NU) #same result with non-parametric test
 
 ```
 
@@ -143,13 +143,13 @@ CT_S <- read_csv("CTmax_Siletz.csv") %>%
 
 
 CT_S_sum <- CT_S %>% 
-  group_by(treatment) %>% 
+  group_by(treatment,trial_start_temp) %>% 
   summarise(mean_CT = mean(ctmax), sem = sd(ctmax)/sqrt(n()))
 
 #Step 2: Plot
 
-ggplot(CT_S, aes(x = treatment, y = ctmax, color = as.factor(treatment)))+
-geom_pointrange(data= CT_S_sum, aes(y = mean_CT, x=treatment, ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
+ggplot(CT_S, aes(x = as.factor(trial_start_temp), y = ctmax, color = as.factor(trial_start_temp)))+
+geom_pointrange(data= CT_S_sum, aes(y = mean_CT, x=as.factor(trial_start_temp), ymin=mean_CT-sem, ymax=mean_CT+sem), size =1)+
    geom_point(size = 2, alpha = 0.8)+
   scale_y_continuous(limits = c(27, 33),breaks=c(27,28, 29,30,31,32,33))+
   scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45"))+
@@ -180,7 +180,7 @@ TukeyHSD(aov_CT_S) #CTmax increased with each increase in holding temperatures
 #Compare common temperature treatments - all populations
 
 #20-24C treatment, aerobic scope measured at 22C
-CT_22 <- rbind(CT_LD, CT_JD, CT_NA, CT_S) %>% 
+CT_22 <- rbind(CT_LD, CT_JD, CT_NU, CT_S) %>% 
   filter(mmr_temp==22)
 
 ggplot(CT_22, aes(x = population, y = ctmax, fill = population))+
@@ -202,7 +202,7 @@ dunnTest(ctmax~population, data=CT_22) #Lower Deschutes has a significantly high
 
 #18-22C temperature treatment, aerobic scope measured at 19 (for John Day temp treatment was 14-27C)
 
-CT_19 <- rbind(CT_LD, CT_NA, CT_S) %>% 
+CT_19 <- rbind(CT_JD,CT_LD, CT_NU, CT_S) %>% 
   filter(mmr_temp==19)
 
 ggplot(CT_19, aes(x = population, y = ctmax, fill = population))+
@@ -222,12 +222,12 @@ kruskal.test(ctmax~population, data=CT_19) #significant differences in CTmax bet
 
 dunnTest(ctmax~population, data=CT_19) #Lower Deschutes has highest CTmax, followed by John Day, followed by North Umpqua and Siletz
 
-#caveat: John Day experienced a much larger fluctuation than the rest
+#caveat: John Day experienced a much larger fluctuation than the rest (temps down to 14C at night)
 
 
 #Now comparing CTmax between North Umpqua and Siletz at ambient since ambient temps were the same for these 2 populations
 
-CT_16 <-rbind(CT_NA, CT_S) %>% 
+CT_16 <-rbind(CT_NU, CT_S) %>% 
   filter(mmr_temp==16)
 
 ggplot(CT_16, aes(x = population, y = ctmax, fill = population))+

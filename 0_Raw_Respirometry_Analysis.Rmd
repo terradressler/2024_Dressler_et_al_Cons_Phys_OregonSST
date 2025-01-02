@@ -265,7 +265,7 @@ Analyzed_files <- "MMR_SMR_AS_EPOC/csv_input_files"
 
 setwd(Analyzed_files)
 MMR_SMR_AS_EPOC(
-  test = "none",
+ # test = "none",
 	data.MMR = "none",
 	data.SMR = "jul25_2022_box1_amb_rmr2_analyzed.csv", 
 	AnimalID = c("A01","A02", "A03", "A04"),
