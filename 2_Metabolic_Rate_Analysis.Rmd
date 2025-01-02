@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE,warning=F, echo=F)
 ```
 
+
 #### Libraries
 
 ```{r}
@@ -87,6 +88,7 @@ summary(aov(mean_rmr_72~as.factor(temp), data = RMR_LD_chase)) #significant diff
 TukeyHSD(aov(mean_rmr_72~as.factor(temp), data = RMR_LD_chase)) #RMR at 19C significantly lower than 22C and 26C
 
 ```
+
 John Day
 ```{r}
 
@@ -160,12 +162,12 @@ North Umpqua
 ```{r}
 
 #Step 1: Read in RMR data 
-RMR_NA <- read_csv("RMR_NorthUmpqua.csv")
+RMR_NU <- read_csv("RMR_NorthUmpqua.csv")
 
 
 #Step 2: Plot all RMR data 
 
-ggplot(RMR_NA, aes(x = temp, y = mean_rmr_72, col = treatment))+
+ggplot(RMR_NU, aes(x = temp, y = mean_rmr_72, col = treatment))+
   geom_point(size = 3, alpha = 0.8)+
  scale_color_manual(values = c("#C6DBEF", "#6BAED6","#2171B5", "#08306B"), labels=c('Ambient (16-19)', "Intermediate (18-22)", "Intermediate (20-24)", "Warm (23-26)"))+
   labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
@@ -182,47 +184,47 @@ ggplot(RMR_NA, aes(x = temp, y = mean_rmr_72, col = treatment))+
 #Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
 
 #start with a linear model
-lmer_NA_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
-Anova(lmer_NA_1, type = c(3))
+lmer_NU_1 <- lmer(mean_rmr_72~temp * as.factor(treatment) + (1|fish_id), data=RMR_NU, REML=FALSE) 
+Anova(lmer_NU_1, type = c(3))
 
 #dropping insignificant interaction between fixed effects
-lmer_NA_2 <- lmer(mean_rmr_72~temp + as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
-Anova(lmer_NA_2, type = c(2))
+lmer_NU_2 <- lmer(mean_rmr_72~temp + as.factor(treatment) + (1|fish_id), data=RMR_NU, REML=FALSE) 
+Anova(lmer_NU_2, type = c(2))
 
 #trying an exponential model
 
-lmer_NA_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
-Anova(lmer_NA_exp_1, type = c(3)) 
+lmer_NU_exp_1 <- lmer(log(mean_rmr_72)~temp * as.factor(treatment) + (1|fish_id), data=RMR_NU, REML=FALSE) 
+Anova(lmer_NU_exp_1, type = c(3)) 
 
 #dropping insignificant interaction between fixed effects
 
-lmer_NA_exp_2 <- lmer(log(mean_rmr_72)~temp +as.factor(treatment) + (1|fish_id), data=RMR_NA, REML=FALSE) 
-Anova(lmer_NA_exp_2, type = c(2)) #significant effects of acute temp and treatment
+lmer_NU_exp_2 <- lmer(log(mean_rmr_72)~temp +as.factor(treatment) + (1|fish_id), data=RMR_NU, REML=FALSE) 
+Anova(lmer_NU_exp_2, type = c(2)) #significant effects of acute temp and treatment
 
-BIC(lmer_NA_1,lmer_NA_2,lmer_NA_exp_1,lmer_NA_exp_2) #exponential model with no interaction is the best fit
+BIC(lmer_NU_1,lmer_NU_2,lmer_NU_exp_1,lmer_NU_exp_2) #exponential model with no interaction is the best fit
 
-plot(lmer_NA_exp_2)
-hist(resid(lmer_NA_exp_2)) #residuals normally distributed
+plot(lmer_NU_exp_2)
+hist(resid(lmer_NU_exp_2)) #residuals normally distributed
 
-summary(lmer_NA_exp_2)
+summary(lmer_NU_exp_2)
 
 #Step 4: RMR comparison at chase/aerobic scope temperatures
-RMR_NA_chase <- RMR_NA %>% 
+RMR_NU_chase <- RMR_NU %>% 
   filter(temp==mmr_temp)  
 
-RMR_NA_chase_sum <- RMR_NA_chase %>% 
+RMR_NU_chase_sum <- RMR_NU_chase %>% 
   group_by(temp,treatment) %>% 
   summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
 
-hist(RMR_NA_chase$mean_rmr_72)
-shapiro.test(RMR_NA_chase$mean_rmr_72) # normal distribution
+hist(RMR_NU_chase$mean_rmr_72)
+shapiro.test(RMR_NU_chase$mean_rmr_72) # normal distribution
 
-leveneTest(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #unequal variance
+leveneTest(mean_rmr_72~as.factor(temp), data = RMR_NU_chase) #unequal variance
 
-kruskal.test(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #significant differences in RMR between chase temps
+kruskal.test(mean_rmr_72~as.factor(temp), data = RMR_NU_chase) #significant differences in RMR between chase temps
 
-dunnTest(mean_rmr_72~as.factor(temp), data = RMR_NA_chase) #RMR increases between 19 & 22
-s
+dunnTest(mean_rmr_72~as.factor(temp), data = RMR_NU_chase) #RMR increases between 19 & 22
+
 ```
 
 
@@ -286,8 +288,105 @@ summary(aov(mean_rmr_72~as.factor(temp), data = RMR_S_chase)) #significant diffe
 TukeyHSD(aov(mean_rmr_72~as.factor(temp), data = RMR_S_chase)) #significant differences between all temps except 19&22
 
 ```
-Population Comparisons
+
+Population Comparison: RMR during 20-24C treatment
 ```{r}
+
+LD_22 <- RMR_LD %>% 
+  filter(mmr_temp==22) %>%
+  mutate(population = "Lower Deschutes")
+
+JD_22 <- RMR_JD %>% 
+  filter(mmr_temp==22)%>%
+  mutate(population = "John Day")
+
+NU_22 <- RMR_NU %>% 
+  filter(mmr_temp==22)%>%
+  mutate(population = "North Umpqua")
+
+S_22 <- RMR_S %>% 
+  filter(mmr_temp==22)%>%
+  mutate(population = "Siletz")
+
+RMR_22_All <- rbind(LD_22,JD_22,NU_22,S_22) %>%
+  select(population, mmr_temp, temp,bw, mean_rmr_72)
+
+RMR_22_sum <- RMR_22_All %>% 
+  group_by(population, temp) %>% 
+  summarise(mean_rmr = mean(mean_rmr_72), sem_rmr = sd(mean_rmr_72)/sqrt(n()))
+
+ggplot(RMR_22_sum, aes(x = temp, y = mean_rmr, ymin = mean_rmr-sem_rmr, ymax=mean_rmr+sem_rmr, color = population))+
+  geom_pointrange(size = 1, alpha = 0.8)+
+   scale_color_manual(values = c("#DD3497","#EC7014","#2171B5", "#238B45"))+
+   labs(y = expression('Resting Metabolic Rate (mg '* kg^-1* L^-1*')'), 
+       x = expression('Temperature ('*~degree*C*')'))+
+   theme_classic()+
+ scale_x_continuous(limits = c(20, 24), breaks = c(20, 21, 22, 23, 24))+
+  scale_y_continuous(limits = c(1,7))+
+  theme(axis.text = element_text(size = 18, color = "black"),
+        axis.title = element_text(size =17),
+        legend.text = element_text(size = 9), legend.position = "right", legend.title = element_blank())
+
+ggsave("Figure_S3.png", dpi=300, height=4, width=6)
+
+#Are there significant differences between RMR of the different populations at each acute temperature during a common treatment?
+
+RMR_20 <- RMR_22_All %>% 
+  filter(temp ==20)
+
+qqPlot(RMR_20$mean_rmr_72)
+
+leveneTest(mean_rmr_72~population, data = RMR_20) # var not equal
+
+kruskal.test(mean_rmr_72~population, data = RMR_20)
+
+dunnTest(mean_rmr_72~population, data = RMR_20) #John Day significantly higher RMR that North Umpqua and Siletz at 20C
+
+
+RMR_21 <- RMR_22_All %>% 
+  filter(temp ==21)
+
+qqPlot(RMR_21$mean_rmr_72)
+
+leveneTest(mean_rmr_72~population, data = RMR_21) # var equal
+
+summary(aov(mean_rmr_72~population, data = RMR_21))
+
+TukeyHSD(aov(mean_rmr_72~population, data = RMR_21)) #John Day significantly higher RMR, Deschutes higher than Siletz but not North Umpqua at 21C
+
+
+RMR_22 <- RMR_22_All %>% 
+  filter(temp ==22)
+
+qqPlot(RMR_22$mean_rmr_72)
+
+leveneTest(mean_rmr_72~population, data = RMR_22) # var equal
+
+summary(aov(mean_rmr_72~population, data = RMR_22))
+
+TukeyHSD(aov(mean_rmr_72~population, data = RMR_22))  #John Day and Deschutes have significantly higher RMR than the other 2 at 22C
+
+RMR_23 <- RMR_22_All %>% 
+  filter(temp ==23)
+
+qqPlot(RMR_23$mean_rmr_72)
+
+leveneTest(mean_rmr_72~population, data = RMR_23) #var not equal
+
+kruskal.test(mean_rmr_72~population, data = RMR_23)
+
+dunnTest(mean_rmr_72~population, data = RMR_23)#John Day and Deschutes have significantly higher RMR than the other 2 at 23C
+
+RMR_24 <- RMR_22_All %>% 
+  filter(temp ==24)
+
+qqPlot(RMR_24$mean_rmr_72)
+
+leveneTest(mean_rmr_72~population, data = RMR_24) #equal var
+
+summary(aov(mean_rmr_72~population, data = RMR_24))
+
+TukeyHSD(aov(mean_rmr_72~population, data = RMR_24)) #John Day and Deschutes have significantly higher RMR than Siletz (but not North Umpqua) at 23C
 
 ```
 
@@ -303,11 +402,11 @@ MMR_LD <- read_csv("MMR_LowerDeschutes.csv")
 
 MMR_LD_sum <- MMR_LD %>% 
   group_by(temperature) %>% 
-  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+  summarise(mean_MMR = mean(mmr_72_74), sem_MMR = sd(mmr_72_74)/sqrt(n()))
 
 #Step 2: plot MMR data
 
-ggplot(MMR_LD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+ggplot(MMR_LD, aes(x = as.factor(temperature) , y = mmr_72_74, color = as.factor(temperature))) +
   geom_boxplot(width = 0.4)+
   geom_point(size = 2.5, alpha = 0.8)+
   scale_x_discrete(name = expression("Temperature " ( degree*C)))+
@@ -321,15 +420,15 @@ ggplot(MMR_LD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.fa
 
 #Step 3: Statistics to test for differences in MMR between temperatures
 
-qqPlot(MMR_LD$mmr_scaled_74)
+qqPlot(MMR_LD$mmr_72_74)
 
 #normal distribution
 
-leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_LD)
+leveneTest(mmr_72_74~as.factor(temperature), data = MMR_LD)
 
 #equal variance
 
-LD_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_LD)
+LD_MMR_aov <- aov(mmr_72_74~as.factor(temperature), data = MMR_LD)
 summary(LD_MMR_aov)
 TukeyHSD(LD_MMR_aov)
 
@@ -346,11 +445,11 @@ MMR_JD <- read_csv("MMR_JohnDay.csv")
 
 MMR_JD_sum <- MMR_JD %>% 
   group_by(temperature) %>% 
-  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+  summarise(mean_MMR = mean(mmr_72_74), sem_MMR = sd(mmr_72_74)/sqrt(n()))
 
 #Step 2: plot MMR data
 
-ggplot(MMR_JD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+ggplot(MMR_JD, aes(x = as.factor(temperature) , y = mmr_72_74, color = as.factor(temperature))) +
   geom_boxplot(width = 0.4)+
   geom_point(size = 2.5, alpha = 0.8)+
   scale_x_discrete(name = expression("Temperature " ( degree*C)))+
@@ -364,15 +463,15 @@ ggplot(MMR_JD, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.fa
 
 #Step 3: Statistics to test for differences in MMR between temperatures
 
-qqPlot(MMR_JD$mmr_scaled_74)
+qqPlot(MMR_JD$mmr_72_74)
 
 #normal distribution
 
-leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_JD)
+leveneTest(mmr_72_74~as.factor(temperature), data = MMR_JD)
 
 #equal variance
 
-JD_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_JD)
+JD_MMR_aov <- aov(mmr_72_74~as.factor(temperature), data = MMR_JD)
 summary(JD_MMR_aov)
 
 #MMR is not statistically different between 19, 22, and 27
@@ -387,11 +486,11 @@ MMR_NU <- read_csv("MMR_NorthUmpqua.csv")
 
 MMR_NU_sum <- MMR_NU %>% 
   group_by(temperature) %>% 
-  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+  summarise(mean_MMR = mean(mmr_72_74), sem_MMR = sd(mmr_72_74)/sqrt(n()))
 
 #Step 2: plot MMR data
 
-ggplot(MMR_NU, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+ggplot(MMR_NU, aes(x = as.factor(temperature) , y = mmr_72_74, color = as.factor(temperature))) +
   geom_boxplot(width = 0.4)+
   geom_point(size = 2.5, alpha = 0.8)+
   scale_x_discrete(name = expression("Temperature " ( degree*C)))+
@@ -405,15 +504,15 @@ ggplot(MMR_NU, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.fa
 
 #Step 3: Statistics to test for differences in MMR between temperatures
 
-qqPlot(MMR_NU$mmr_scaled_74)
+qqPlot(MMR_NU$mmr_72_74)
 
 #normal distribution
 
-leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_NU)
+leveneTest(mmr_72_74~as.factor(temperature), data = MMR_NU)
 
 #equal variance
 
-NU_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_NU)
+NU_MMR_aov <- aov(mmr_72_74~as.factor(temperature), data = MMR_NU)
 summary(NU_MMR_aov)
 
 #MMR is not statistically different between 16, 19, 22, and 25
@@ -421,18 +520,17 @@ summary(NU_MMR_aov)
 ```
 
 Siletz
-
 ```{r}
 #Step 1: read in MMR data, get means & SEMs
 MMR_S <- read_csv("MMR_Siletz.csv")
 
 MMR_S_sum <- MMR_S %>% 
   group_by(temperature) %>% 
-  summarise(mean_MMR = mean(mmr_scaled_74), sem_MMR = sd(mmr_scaled_74)/sqrt(n()))
+  summarise(mean_MMR = mean(mmr_72_74), sem_MMR = sd(mmr_72_74)/sqrt(n()))
 
 #Step 2: plot MMR data
 
-ggplot(MMR_S, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.factor(temperature))) +
+ggplot(MMR_S, aes(x = as.factor(temperature) , y = mmr_72_74, color = as.factor(temperature))) +
   geom_boxplot(width = 0.4)+
   geom_point(size = 2.5, alpha = 0.8)+
   scale_x_discrete(name = expression("Temperature " ( degree*C)))+
@@ -446,15 +544,15 @@ ggplot(MMR_S, aes(x = as.factor(temperature) , y = mmr_scaled_74, color = as.fac
 
 #Step 3: Statistics to test for differences in MMR between temperatures
 
-qqPlot(MMR_S$mmr_scaled_74)
+qqPlot(MMR_S$mmr_72_74)
 
 #not a normal distribution
 
-leveneTest(mmr_scaled_74~as.factor(temperature), data = MMR_S)
+leveneTest(mmr_72_74~as.factor(temperature), data = MMR_S)
 
 #equal variance
 
-S_MMR_aov <- aov(mmr_scaled_74~as.factor(temperature), data = MMR_S)
+S_MMR_aov <- aov(mmr_72_74~as.factor(temperature), data = MMR_S)
 summary(S_MMR_aov)
 
 #MMR is not statistically different between 16, 19, 22, and 25
@@ -471,7 +569,7 @@ AS_LD <- read_csv("Deschutes_Scopes.csv")
 
 AS_LD_sum <- AS_LD %>% 
   group_by(Population,Temp) %>% 
-  summarise(mean_aas = mean(aas), min_aas = min(aas), sem_aas = sd(aas/sqrt(n())), mean_fas = mean(fas), sem_fas = sd(fas)/sqrt(n()), mean_MMR = mean(mmr_scaled), sem_MMR = sd(mmr_scaled)/sqrt(n()), mean_RMR = mean(rmr_scaled), sem_RMR = sd(rmr_scaled)/sqrt(n()), n = n(), min_bw=min(BW)*1000, max_bw=max(BW)*1000)
+  summarise(mean_aas = mean(aas), min_aas = min(aas), sem_aas = sd(aas/sqrt(n())), mean_fas = mean(fas), sem_fas = sd(fas)/sqrt(n()), mean_MMR = mean(mmr_72), sem_MMR = sd(mmr_72)/sqrt(n()), mean_RMR = mean(rmr_72), sem_RMR = sd(rmr_72)/sqrt(n()), n = n(), min_bw=min(BW)*1000, max_bw=max(BW)*1000)
 
 #Step 2: Plots
 
@@ -506,8 +604,8 @@ ggplot(BH_Scopes, aes(x = as.factor(Temp), y = fas, col = as.factor(Temp)))+
 ggplot(BH_Scopes_sum)+
   geom_pointrange(aes(x = Temp, y = mean_MMR, ymin = mean_MMR-sem_MMR, ymax = mean_MMR+sem_MMR, col = as.factor(Temp)), size = 1.5, shape = "triangle")+
    geom_pointrange(aes(x = Temp, y = mean_RMR, ymin = mean_RMR-sem_RMR, ymax = mean_RMR+sem_RMR, col = as.factor(Temp)), size = 1.5)+
-  geom_point(data = BH_Scopes, aes(y = mmr_scaled, x = Temp, col = as.factor(Temp)),size =2, alpha = 0.6, shape = "triangle")+
-  geom_point(data = BH_Scopes, aes(y = rmr_scaled, x = Temp, col = as.factor(Temp)),size =2, alpha = 0.6)+
+  geom_point(data = BH_Scopes, aes(y = mmr_72, x = Temp, col = as.factor(Temp)),size =2, alpha = 0.6, shape = "triangle")+
+  geom_point(data = BH_Scopes, aes(y = rmr_72, x = Temp, col = as.factor(Temp)),size =2, alpha = 0.6)+
   scale_color_manual(values = c("#FEE391", "#EC7014" ,"#993404"))+
    scale_x_continuous(name = expression("Temperature " ( degree*C)), limits = c(16, 28), breaks = c(16, 19, 22, 25, 28))+
   scale_y_continuous(limits = c(0,20), breaks = c(0, 5, 10, 15, 20))+
@@ -633,4 +731,6 @@ ggplot(BH_Scopes, aes(y = aas, x = Temp))+
 
 ggsave("aas_bh.png", dpi=300)
 ```
+
+
 
