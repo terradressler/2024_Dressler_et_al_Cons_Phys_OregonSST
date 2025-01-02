@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,warning=F, echo=F)
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE, echo=FALSE)
 ```
 
 
@@ -18,6 +18,7 @@ library(tidyverse)
 library(lme4)
 library(car)
 library(FSA)
+library(ggpubr)
 
 ```
 
@@ -45,7 +46,7 @@ ggplot(RMR_LD, aes(x = temp, y = mean_rmr_72, col = treatment))+
         axis.title = element_text(size =17),
         legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
 
-ggsave("Figure4A.png",dpi=300)
+ggsave("Figure4A.png",dpi=600)
 
 
 #Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
@@ -111,7 +112,7 @@ ggplot(RMR_JD, aes(x = temp, y = mean_rmr_72, col = treatment))+
         axis.title = element_text(size =17),
         legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
 
-ggsave("Figure4B.png",dpi=300)
+ggsave("Figure4B.png",dpi=600)
 
 #Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
 
@@ -148,7 +149,7 @@ RMR_JD_chase_sum <- RMR_JD_chase %>%
   group_by(temp,treatment) %>% 
   summarise(mean_RMR = mean(mean_rmr_72), sem_RMR = sd(mean_rmr_72)/sqrt(n()))
 
-hist(RMR_JD_chase$mean_rmr_74)
+hist(RMR_JD_chase$mean_rmr_72)
 shapiro.test(RMR_JD_chase$mean_rmr_72) # not a normal distribution
 
 leveneTest(mean_rmr_72~as.factor(temp), data = RMR_JD_chase) #unequal variance
@@ -180,7 +181,7 @@ ggplot(RMR_NU, aes(x = temp, y = mean_rmr_72, col = treatment))+
         axis.title = element_text(size =17),
         legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
 
-ggsave("Figure4C.png",dpi=300)
+ggsave("Figure4C.png",dpi=600)
 
 #Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
 
@@ -250,7 +251,7 @@ ggplot(RMR_S, aes(x = temp, y = mean_rmr_72, col = treatment))+
         axis.title = element_text(size =17),
         legend.text = element_text(size = 12), legend.position = "right", legend.title=element_blank())
 
-ggsave("Figure4D.png",dpi=300)
+ggsave("Figure4D.png",dpi=600)
 
 #Step 3: Statistical analysis to determine the relationship between temperature and RMR (using fish ID as a random effect to account for repeated measures within holding temperature treatments)
 
@@ -328,7 +329,7 @@ ggplot(RMR_22_sum, aes(x = temp, y = mean_rmr, ymin = mean_rmr-sem_rmr, ymax=mea
         axis.title = element_text(size =17),
         legend.text = element_text(size = 9), legend.position = "right", legend.title = element_blank())
 
-ggsave("Figure_S3.png", dpi=300, height=4, width=6)
+ggsave("Figure_S3.png", dpi=600, height=4, width=6)
 
 #Are there significant differences between RMR of the different populations at each acute temperature during a common treatment?
 
@@ -567,7 +568,7 @@ Lower Deschutes
 ```{r}
 #Step 1: read in data get means and SEMs
 AS_LD <- read_csv("Aerobic_Scopes.csv") %>% 
-  filter(population=="Lower Deschutes")
+  filter(population=="Deschutes")
 
 AS_LD_sum <- AS_LD %>% 
   group_by(population,temp) %>% 
@@ -590,7 +591,7 @@ ggplot(AS_LD_sum)+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure5A.png", dpi=300)
+ggsave("Figure5A.png", dpi=600)
 
 #Step 3: Absolute Aerobic Scope (AAS)
 
@@ -637,7 +638,7 @@ ggplot(AS_LD, aes(y = aas, x = temp))+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure6A.png", dpi=300)
+ggsave("Figure6A.png", dpi=600)
 
 #Step 4: Factorial Aerobic Scope (FAS)
 
@@ -668,7 +669,7 @@ ggplot(AS_LD, aes(y = fas, x = temp))+
         aspect.ratio = 1, legend.position = "none")
 
 
-ggsave("Figure8A.png", dpi=300)
+ggsave("Figure8A.png", dpi=600)
 ```
 John Day
 ```{r}
@@ -697,7 +698,7 @@ ggplot(AS_JD_sum)+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure5B.png", dpi=300)
+ggsave("Figure5B.png", dpi=600)
 
 #Step 3: Absolute Aerobic Scope (AAS)
 
@@ -749,7 +750,7 @@ ggplot(AS_JD, aes(y = aas, x = temp))+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure6B.png", dpi=300)
+ggsave("Figure6B.png", dpi=600)
 
 #Step 4: Factorial Aerobic Scope (FAS)
 
@@ -780,7 +781,7 @@ ggplot(AS_JD, aes(y = fas, x = temp))+
         aspect.ratio = 1, legend.position = "none")
 
 
-ggsave("Figure8B.png", dpi=300)
+ggsave("Figure8B.png", dpi=600)
 
 ```
 North Umpqua
@@ -810,7 +811,7 @@ ggplot(AS_NU_sum)+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure5C.png", dpi=300)
+ggsave("Figure5C.png", dpi=600)
 
 #Step 3: Absolute Aerobic Scope (AAS)
 
@@ -862,7 +863,7 @@ ggplot(AS_NU, aes(y = aas, x = temp))+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure6C.png", dpi=300)
+ggsave("Figure6C.png", dpi=600)
 
 #Step 4: Factorial Aerobic Scope (FAS)
 
@@ -893,7 +894,7 @@ ggplot(AS_NU, aes(y = fas, x = temp))+
         aspect.ratio = 1, legend.position = "none")
 
 
-ggsave("Figure8C.png", dpi=300)
+ggsave("Figure8C.png", dpi=600)
 ```
 Siletz
 ```{r}
@@ -922,7 +923,7 @@ ggplot(AS_S_sum)+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure5D.png", dpi=300)
+ggsave("Figure5D.png", dpi=600)
 
 #Step 3: Absolute Aerobic Scope (AAS)
 
@@ -974,7 +975,7 @@ ggplot(AS_S, aes(y = aas, x = temp))+
         axis.text = element_text(size=20, colour= 'black'),
         aspect.ratio = 1, legend.position = "none")
 
-ggsave("Figure6D.png", dpi=300)
+ggsave("Figure6D.png", dpi=600)
 
 #Step 4: Factorial Aerobic Scope (FAS)
 
@@ -1006,10 +1007,124 @@ ggplot(AS_NU, aes(y = fas, x = temp))+
         aspect.ratio = 1, legend.position = "none")
 
 
-ggsave("Figure8D.png", dpi=300)
+ggsave("Figure8D.png", dpi=600)
 ```
 
-Population Comparisons 
+Population Comparisons of Aerobic Scopes
+```{r}
+#Absolute Aerobic Scope - 19C
+
+AS_19 <- read_csv("Aerobic_Scopes.csv") %>% 
+  filter(temp==19)
+
+AS_19_sum <- AS_19 %>% 
+  group_by(population) %>% 
+  summarise(mean_aas = mean(aas), sem_aas = sd(aas)/sqrt(n()), mean_fas = mean(fas), sem_fas = sd(fas)/sqrt(n()))
+
+ggplot(AS_19, aes(x = population, y = aas, color = population))+
+  geom_point()+
+ geom_pointrange(data = AS_19_sum, aes(x = population, y = mean_aas, ymin=mean_aas-sem_aas, ymax=mean_aas+sem_aas, color = population), size = 1.5, alpha = 0.8)+
+   scale_color_manual(values = c("#EC7014",  "#DD3497","#2171B5", "#238B45"))+
+   labs(y = expression('Absolute Aerobic Scope (mg '* kg^-1* L^-1*')'), x = "")+
+   theme_classic()+
+  scale_y_continuous(limits = c(0,20))+
+  theme(axis.text = element_text(size = 17, color = "black"),
+        axis.title = element_text(size =18),
+        legend.position = "none",
+        aspect.ratio = 0.9)
+
+ggsave("Figure7A.png", dpi=600)
+
+qqnorm(AS_19$aas)
+shapiro.test(AS_19$aas)
+#normal distribution
+leveneTest(aas~population, data = AS_19)
+#equal variance
+aov_aas_19 <- aov(aas~population, data = AS_19) 
+summary(aov_aas_19)
+TukeyHSD(aov_aas_19) 
+
+#Absolute Aerobic Scope - 22C
+AS_22 <- read_csv("Aerobic_Scopes.csv") %>% 
+  filter(temp==22)
+
+AS_22_sum <- AS_22 %>% 
+  group_by(population) %>% 
+  summarise(mean_aas = mean(aas), sem_aas = sd(aas)/sqrt(n()), mean_fas = mean(fas), sem_fas = sd(fas)/sqrt(n()))
+
+ggplot(AS_22, aes(x = population, y = aas, color = population))+
+  geom_point()+
+ geom_pointrange(data = AS_22_sum, aes(x = population, y = mean_aas, ymin=mean_aas-sem_aas, ymax=mean_aas+sem_aas, color = population), size = 1.5, alpha = 0.8)+
+   scale_color_manual(values = c("#EC7014",  "#DD3497","#2171B5", "#238B45"))+
+   labs(y = expression('Absolute Aerobic Scope (mg '* kg^-1* L^-1*')'), x = "")+
+   theme_classic()+
+  scale_y_continuous(limits = c(0,20))+
+  theme(axis.text = element_text(size = 17, color = "black"),
+        axis.title = element_text(size =18),
+        legend.position = "none",
+        aspect.ratio = 0.9)
+
+ggsave("Figure7B.png", dpi=600)
+
+qqnorm(AS_22$aas)
+shapiro.test(AS_22$aas)
+#normal distribution
+leveneTest(aas~population, data = AS_22)
+#equal variance
+aov_aas_22 <- aov(aas~population, data = AS_22) 
+summary(aov_aas_22)
+TukeyHSD(aov_aas_22) 
+
+#Factorial Aerobic Scope - 19C
+ggplot(AS_19, aes(x = population, y = fas, color = population))+
+  geom_point()+
+ geom_pointrange(data = AS_19_sum, aes(x = population, y = mean_fas, ymin=mean_fas-sem_fas, ymax=mean_fas+sem_fas, color = population), size = 1.5, alpha = 0.8)+
+   scale_color_manual(values = c("#EC7014",  "#DD3497","#2171B5", "#238B45"))+
+   labs(y = expression('Absolute Aerobic Scope (mg '* kg^-1* L^-1*')'), x = "")+
+   theme_classic()+
+ geom_hline(yintercept = 3, linetype = "dashed")+
+  scale_y_continuous(limits = c(0,10), breaks = c(2,4,6,8,10))+
+  theme(axis.text = element_text(size = 17, color = "black"),
+        axis.title = element_text(size =18),
+        legend.position = "none",
+        aspect.ratio = 0.9)
+
+ggsave("Figure7C.png", dpi=600)
+
+qqnorm(AS_19$fas)
+shapiro.test(AS_19$fas)
+#normal distribution
+leveneTest(fas~population, data = AS_19)
+#equal variance
+aov_fas_19 <- aov(fas~population, data = AS_19) 
+summary(aov_fas_19)
+TukeyHSD(aov_fas_19)
+
+
+#Factorial Aerobic Scope - 22C
+ggplot(AS_22, aes(x = population, y = fas, color = population))+
+  geom_point()+
+ geom_pointrange(data = AS_22_sum, aes(x = population, y = mean_fas, ymin=mean_fas-sem_fas, ymax=mean_fas+sem_fas, color = population), size = 1.5, alpha = 0.8)+
+   scale_color_manual(values = c("#EC7014",  "#DD3497","#2171B5", "#238B45"))+
+   labs(y = expression('Absolute Aerobic Scope (mg '* kg^-1* L^-1*')'), x = "")+
+   theme_classic()+
+ geom_hline(yintercept = 3, linetype = "dashed")+
+  scale_y_continuous(limits = c(0,10), breaks = c(2,4,6,8,10))+
+  theme(axis.text = element_text(size = 17, color = "black"),
+        axis.title = element_text(size =18),
+        legend.position = "none",
+        aspect.ratio = 0.9)
+
+ggsave("Figure7D.png", dpi=600)
+
+qqnorm(AS_22$fas)
+shapiro.test(AS_22$fas)
+#normal distribution
+leveneTest(fas~population, data = AS_22)
+#unequal variance
+kruskal.test(fas~population, data = AS_22)
+
+```
 
 
 
