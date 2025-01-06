@@ -17,6 +17,10 @@ library(ggbreak)
 
 ```
 
+### Recovery of Metabolic Rate (MO2)
+
+
+
 ### Recovery of Factorial Aerobic Scope
 
 Lower Deschutes
@@ -42,7 +46,6 @@ ggplot(recov_LD_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, 
   labs(y = "FAS Available", x = "Time Post-MMR (minutes)")+
   scale_y_continuous(limits = c(1,7.5),breaks =c(1,3,5,7))+
   scale_x_cut(breaks = c(62),which=c(2), space = c(.5), scales =c(0.1))+
-  # annotate("text", x = 13.5, y = 7.5, label = "Lower Deschutes", size=8, fontface="bold",color="#EC7014")+
   geom_hline(aes(yintercept = 3), linetype = "dashed")+
   scale_x_continuous(limits=c(-1.5,68), breaks = c(-0,20,40,60))+
   theme_classic()+
@@ -51,6 +54,111 @@ ggplot(recov_LD_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, 
         legend.text=element_text(size=18),
         legend.title = element_blank())
 
-ggsave("recov_deschutes_FAS.png",height =5,width=7.5, dpi=300)
+ggsave("Figure10A.png",height =5,width=7.5, dpi=300)
 ```
 
+John Day
+```{r}
+
+recov_JD <- read_csv("Recovery_JohnDay.csv") %>% 
+  mutate(time_round = round(min_start_real, -1),  percent_mmr = percent_mmr*100, mmr_50 = mmr/2, temp = as.factor(temp))
+
+recov_JD_sum <- recov_JD %>% 
+    group_by(temp, time_round) %>% 
+  summarise(mean_mo2 = mean(mo2_scaled), sd_mo2 = sd(mo2_scaled), sem_mo2 = sd_mo2/sqrt(n()), mean_percent = mean(percent_mmr), sd_percent= sd(percent_mmr), sem_percent = sd_percent/sqrt(n()), n = n(), mean_aas = mean(percent_aas), sem_aas = sd(percent_aas)/sqrt(n()),mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()),n = n()) %>% 
+  filter(n>2)
+
+fas_max_JD <- read_csv("fas_max_JD.csv") %>% 
+  group_by(temp, time_round) %>% 
+  summarise(mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()), n = n())
+
+ggplot(recov_JD_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)))+
+  geom_pointrange(size = .8, alpha = .7)+
+  geom_pointrange(data = fas_max_JD, aes(x = time_round, y=mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)),size = .8, alpha = .7)+
+  scale_color_manual(values = c("#FCC5C0", "#DD3497", "#980043"))+
+  geom_line(size =.7)+
+  labs(y = "FAS Available", x = "Time Post-MMR (minutes)")+
+  scale_y_continuous(limits = c(1,7.5),breaks =c(1,3,5,7))+
+  scale_x_cut(breaks = c(62),which=c(2), space = c(.5), scales =c(0.1))+
+  geom_hline(aes(yintercept = 3), linetype = "dashed")+
+  scale_x_continuous(limits=c(-1.5,68), breaks = c(-0,20,40,60))+
+  theme_classic()+
+  theme(axis.text = element_text(size = 18),
+        axis.title  = element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title = element_blank())
+
+ggsave("Figure10B.png",height =5,width=7.5, dpi=300)
+
+```
+
+North Umpqua
+```{r}
+
+recov_NU <- read_csv("Recovery_NorthUmpqua.csv") %>% 
+  mutate(time_round = round(min_start_real, -1),  percent_mmr = percent_mmr*100, mmr_50 = mmr/2, temp = as.factor(temp))
+
+recov_NU_sum <- recov_NU %>% 
+    group_by(temp, time_round) %>% 
+  summarise(mean_mo2 = mean(mo2_scaled), sd_mo2 = sd(mo2_scaled), sem_mo2 = sd_mo2/sqrt(n()), mean_percent = mean(percent_mmr), sd_percent= sd(percent_mmr), sem_percent = sd_percent/sqrt(n()), n = n(), mean_aas = mean(percent_aas), sem_aas = sd(percent_aas)/sqrt(n()),mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()),n = n()) %>% 
+  filter(n>2)
+
+fas_max_NU <- read_csv("fas_max_NU.csv") %>% 
+  group_by(temp, time_round) %>% 
+  summarise(mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()), n = n())
+
+ggplot(recov_NU_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)))+
+  geom_pointrange(size = .8, alpha = .7)+
+  geom_pointrange(data = fas_max_NU, aes(x = time_round, y=mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)),size = .8, alpha = .7)+
+  scale_color_manual(values = c("#C6DBEF", "#6BAED6","#2171B5", "#08306B"))+
+  geom_line(size =.7)+
+  labs(y = "FAS Available", x = "Time Post-MMR (minutes)")+
+  scale_y_continuous(limits = c(1,7.5),breaks =c(1,3,5,7))+
+  scale_x_cut(breaks = c(62),which=c(2), space = c(.5), scales =c(0.1))+
+  geom_hline(aes(yintercept = 3), linetype = "dashed")+
+  scale_x_continuous(limits=c(-1.5,68), breaks = c(-0,20,40,60))+
+  theme_classic()+
+  theme(axis.text = element_text(size = 18),
+        axis.title  = element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title = element_blank())
+
+ggsave("Figure10C.png",height =5,width=7.5, dpi=300)
+
+```
+
+Siletz
+
+```{r}
+
+recov_S <- read_csv("Recovery_Siletz.csv") %>% 
+  mutate(time_round = round(min_start_real, -1),  percent_mmr = percent_mmr*100, mmr_50 = mmr/2, temp = as.factor(temp))
+
+recov_S_sum <- recov_S %>% 
+    group_by(temp, time_round) %>% 
+  summarise(mean_mo2 = mean(mo2_scaled), sd_mo2 = sd(mo2_scaled), sem_mo2 = sd_mo2/sqrt(n()), mean_percent = mean(percent_mmr), sd_percent= sd(percent_mmr), sem_percent = sd_percent/sqrt(n()), n = n(), mean_aas = mean(percent_aas), sem_aas = sd(percent_aas)/sqrt(n()),mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()),n = n()) %>% 
+  filter(n>2)
+
+fas_max_S <- read_csv("fas_max_S.csv") %>% 
+  group_by(temp, time_round) %>% 
+  summarise(mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()), n = n())
+
+ggplot(recov_S_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)))+
+  geom_pointrange(size = .8, alpha = .7)+
+  geom_pointrange(data = fas_max_S, aes(x = time_round, y=mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)),size = .8, alpha = .7)+
+  scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"))+
+  geom_line(size =.7)+
+  labs(y = "FAS Available", x = "Time Post-MMR (minutes)")+
+  scale_y_continuous(limits = c(1,7.5),breaks =c(1,3,5,7))+
+  scale_x_cut(breaks = c(62),which=c(2), space = c(.5), scales =c(0.1))+
+  geom_hline(aes(yintercept = 3), linetype = "dashed")+
+  scale_x_continuous(limits=c(-1.5,68), breaks = c(-0,20,40,60))+
+  theme_classic()+
+  theme(axis.text = element_text(size = 18),
+        axis.title  = element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title = element_blank())
+
+ggsave("Figure10D.png",height =5,width=7.5, dpi=300)
+
+```
