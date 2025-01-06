@@ -6,25 +6,51 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 ```
 
-## R Markdown
+### Libraries
+```{r}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+library(tidyverse)
+library(ggbreak)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+### Recovery of Factorial Aerobic Scope
 
-You can also embed plots, for example:
+Lower Deschutes
+```{r}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+recov_LD <- read_csv("Recovery_LowerDeschutes.csv") %>% 
+  mutate(time_round = round(min_start_real, -1),  percent_mmr = percent_mmr*100, mmr_50 = mmr/2, temp = as.factor(temp))
+
+recov_LD_sum <- recov_LD %>% 
+    group_by(temp, time_round) %>% 
+  summarise(mean_mo2 = mean(mo2_scaled), sd_mo2 = sd(mo2_scaled), sem_mo2 = sd_mo2/sqrt(n()), mean_percent = mean(percent_mmr), sd_percent= sd(percent_mmr), sem_percent = sd_percent/sqrt(n()), n = n(), mean_aas = mean(percent_aas), sem_aas = sd(percent_aas)/sqrt(n()),mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()),n = n()) %>% 
+  filter(n>2)
+
+fas_max_LD <- read_csv("fas_max_LD.csv") %>% 
+  group_by(temp, time_round) %>% 
+  summarise(mean_fas = mean(fas_available), sem_fas = sd(fas_available)/sqrt(n()), n = n())
+
+ggplot(recov_LD_sum, aes(x = time_round, y = mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)))+
+  geom_pointrange(size = .8, alpha = .7)+
+  geom_pointrange(data = fas_max_LD, aes(x = time_round, y=mean_fas, ymin = mean_fas-sem_fas, ymax = mean_fas+sem_fas, color = as.factor(temp)),size = .8, alpha = .7)+
+  scale_color_manual(values = c("#FEE391", "#EC7014" ,"#993404"))+
+  geom_line(size =.7)+
+  labs(y = "FAS Available", x = "Time Post-MMR (minutes)")+
+  scale_y_continuous(limits = c(1,7.5),breaks =c(1,3,5,7))+
+  scale_x_cut(breaks = c(62),which=c(2), space = c(.5), scales =c(0.1))+
+  # annotate("text", x = 13.5, y = 7.5, label = "Lower Deschutes", size=8, fontface="bold",color="#EC7014")+
+  geom_hline(aes(yintercept = 3), linetype = "dashed")+
+  scale_x_continuous(limits=c(-1.5,68), breaks = c(-0,20,40,60))+
+  theme_classic()+
+  theme(axis.text = element_text(size = 18),
+        axis.title  = element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title = element_blank())
+
+ggsave("recov_deschutes_FAS.png",height =5,width=7.5, dpi=300)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
