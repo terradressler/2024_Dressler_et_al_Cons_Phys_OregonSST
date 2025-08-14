@@ -1,0 +1,126 @@
+treatment,trial_start_temp,ctmax,mmr_temp,population
+ambient,21,31.1,19,John Day
+ambient,21,31.4,19,John Day
+ambient,21,31,19,John Day
+ambient,21,31.1,19,John Day
+ambient,21,31.1,19,John Day
+ambient,21,31.3,19,John Day
+ambient,21,30.8,19,John Day
+ambient,21,30.9,19,John Day
+ambient,21,31,19,John Day
+ambient,21,31,19,John Day
+ambient,21,31,19,John Day
+ambient,21,31.2,19,John Day
+ambient,21,31.6,19,John Day
+ambient,21,31.6,19,John Day
+ambient,21,31.7,19,John Day
+ambient,21,31.8,19,John Day
+hot,26,30.8,27,John Day
+hot,26,31,27,John Day
+hot,26,31,27,John Day
+hot,26,31.3,27,John Day
+hot,26,31.3,27,John Day
+hot,26,31.3,27,John Day
+hot,26,31.4,27,John Day
+ambient,20,31.7,19,Lower Deschutes
+ambient,20,31.7,19,Lower Deschutes
+ambient,20,31.7,19,Lower Deschutes
+ambient,20,32,19,Lower Deschutes
+ambient,20,32.1,19,Lower Deschutes
+ambient,20,32.1,19,Lower Deschutes
+ambient,20,32.1,19,Lower Deschutes
+ambient,20,32.1,19,Lower Deschutes
+ambient,20,32.3,19,Lower Deschutes
+ambient,20,32.5,19,Lower Deschutes
+ambient,20,32.4,19,Lower Deschutes
+intermediate,22,31,22,Lower Deschutes
+intermediate,22,31.2,22,Lower Deschutes
+intermediate,22,31.4,22,Lower Deschutes
+intermediate,22,31.5,22,Lower Deschutes
+intermediate,22,31.5,22,Lower Deschutes
+intermediate,22,31.4,22,Lower Deschutes
+intermediate,22,31.4,22,Lower Deschutes
+intermediate,22,31.5,22,Lower Deschutes
+intermediate,22,31.5,22,Lower Deschutes
+intermediate,22,31.6,22,Lower Deschutes
+intermediate,22,31.7,22,Lower Deschutes
+hot,26,30.3,26,Lower Deschutes
+hot,26,31.1,26,Lower Deschutes
+hot,26,31.1,26,Lower Deschutes
+hot,26,31.4,26,Lower Deschutes
+hot,26,31.4,26,Lower Deschutes
+hot,26,31.4,26,Lower Deschutes
+hot,26,31.5,26,Lower Deschutes
+hot,26,31.5,26,Lower Deschutes
+hot,26,31.5,26,Lower Deschutes
+hot,26,31.5,26,Lower Deschutes
+hot,26,31.7,26,Lower Deschutes
+intermediate_1,19,28.3,19,North Umpqua
+intermediate_1,19,28.7,19,North Umpqua
+intermediate_1,19,29.3,19,North Umpqua
+intermediate_1,19,29.6,19,North Umpqua
+intermediate_1,19,29.8,19,North Umpqua
+intermediate_1,19,30.3,19,North Umpqua
+intermediate_1,19,30.4,19,North Umpqua
+intermediate_1,19,30.5,19,North Umpqua
+intermediate_1,19,30.6,19,North Umpqua
+intermediate_1,19,30.6,19,North Umpqua
+intermediate_1,19,30.6,19,North Umpqua
+intermediate_2,22,28.9,22,North Umpqua
+intermediate_2,22,29.3,22,North Umpqua
+intermediate_2,22,29.5,22,North Umpqua
+intermediate_2,22,29.8,22,North Umpqua
+intermediate_2,22,30,22,North Umpqua
+intermediate_2,22,30,22,North Umpqua
+intermediate_2,22,30.3,22,North Umpqua
+intermediate_2,22,30.4,22,North Umpqua
+intermediate_2,22,30.5,22,North Umpqua
+intermediate_2,22,30.8,22,North Umpqua
+intermediate_2,22,30.9,22,North Umpqua
+hot,25,27.6,25,North Umpqua
+hot,25,28.9,25,North Umpqua
+hot,25,29.7,25,North Umpqua
+hot,25,30,25,North Umpqua
+hot,25,30.1,25,North Umpqua
+hot,25,30.1,25,North Umpqua
+hot,25,30.3,25,North Umpqua
+hot,25,31.2,25,North Umpqua
+hot,25,31.3,25,North Umpqua
+ambient,18,27.4,16,North Umpqua
+ambient,18,29.7,16,North Umpqua
+ambient,18,29.7,16,North Umpqua
+ambient,18,30,16,North Umpqua
+ambient,18,30,16,North Umpqua
+ambient,18,30.4,16,North Umpqua
+ambient,18,30.7,16,North Umpqua
+ambient,18,30.7,16,North Umpqua
+ambient,18,30.9,16,North Umpqua
+ambient,18,30.9,16,North Umpqua
+ambient,16,28.4,16,Siletz
+ambient,16,28.5,16,Siletz
+ambient,16,28.8,16,Siletz
+ambient,16,28.8,16,Siletz
+ambient,16,28.8,16,Siletz
+ambient,16,28.8,16,Siletz
+ambient,16,28.9,16,Siletz
+ambient,16,28.9,16,Siletz
+ambient,16,29.1,16,Siletz
+ambient,16,29.4,16,Siletz
+intermediate_1,20,28.9,19,Siletz
+intermediate_1,20,29.2,19,Siletz
+intermediate_1,20,29.2,19,Siletz
+intermediate_1,20,29.2,19,Siletz
+intermediate_1,20,29.4,19,Siletz
+intermediate_1,20,29.8,19,Siletz
+intermediate_1,20,29.8,19,Siletz
+intermediate_1,20,29.8,19,Siletz
+intermediate_1,20,29.8,19,Siletz
+intermediate_1,20,29.9,19,Siletz
+intermediate_2,22,29.9,22,Siletz
+intermediate_2,22,30,22,Siletz
+intermediate_2,22,30.1,22,Siletz
+intermediate_2,22,30.2,22,Siletz
+intermediate_2,22,30.2,22,Siletz
+intermediate_2,22,30.4,22,Siletz
+intermediate_2,22,30.4,22,Siletz
+intermediate_2,22,30.7,22,Siletz

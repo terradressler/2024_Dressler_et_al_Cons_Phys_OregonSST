@@ -14,10 +14,96 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 library(tidyverse)
 library(ggbreak)
+library(lme4)
+library(car)
+library(ggpubr)
 
 ```
 
 ### Recovery of Metabolic Rate (MO2)
+
+Siletz
+```{r}
+
+#Load Recovery Data
+recov_S <- read_csv("Recovery_Siletz.csv") %>% 
+  mutate(time_round = round(min_start_real, -1),  percent_mmr = percent_mmr*100, mmr_50 = mmr/2, temp = as.factor(temp))
+
+#Plot Mo2 over time for each fish
+ggplot(recov_S, aes(x = min_start_real, y = mo2_scaled, color = temp))+
+  geom_point(size = 2.5, alpha = 0.8)+
+  scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"))+
+  #geom_line(aes(sep = ID))+
+  labs(x = "Time Post-Chase (min)")+
+  theme_classic()
+
+#This is a bi-exponential decay and we need to model both exponential functions (decay between the first 2 time points and then the rest)
+
+#Second exponential decay
+
+recov_S_B <- recov_S%>%
+  filter(time_round>11) 
+
+ggplot(recov_S_B, aes(y = ln_mo2_minus_rmr, x = min_start_real, col = temp))+
+geom_point(size = 2.5, alpha = 0.8)+
+  scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"))+
+#  geom_line()+
+ # geom_line(aes(sep = ID))+
+  labs(x = "Time Post-Chase", y = "ln(MO2-RMR)")+
+# stat_smooth(method = "lm", se=FALSE)+
+ # stat_cor(label.x = 15)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+lm_B <- lm( ln_mo2_minus_rmr~min_start_real, data = recov_S_B)
+lm_B_T <- lm( ln_mo2_minus_rmr~min_start_real + temp, data = recov_S_B)
+lm_B_ID <- lm( ln_mo2_minus_rmr~min_start_real + ID, data = recov_S_B)
+lm_B_T2 <- lm( ln_mo2_minus_rmr~min_start_real * temp, data = recov_S_B)
+lm_B_ID2 <- lm( ln_mo2_minus_rmr~min_start_real * ID, data = recov_S_B)
+
+lmer_B <- lmer(ln_mo2_minus_rmr~min_start_real+(1|ID), data = recov_S_B)
+lmer_B_T <- lmer( ln_mo2_minus_rmr~min_start_real+temp+(1|ID), data = recov_S_B)
+
+BIC(lm_B, lm_B_T, lm_B_ID, lm_B_T2, lm_B_ID2, lmer_B,lmer_B_T)
+
+#Best fit includes ID as a fixed or random effect and does NOT include temperature
+#Realistically we do not have enough data points to model recovery for each fish (i.e., to have ID be a fixed effect) although this would be ideal
+#Mixed model using ID as a random effect fits just as well according to BIC
+
+summary(lmer_B)
+
+plot(lmer_B)
+hist(resid(lmer_B))
+
+#first  decay
+recov_S_A <- recov_S %>%
+  filter(time_round<11) %>% 
+  na.omit()
+
+ggplot(recov_S_A, aes(y = ln_mo2_minus_Bebt, x = min_start_real, col = temp))+
+  scale_color_manual(values = c("#CCECE6",  "#66C2A4","#238B45", "#00441B"))+
+  geom_point(alpha = 0.6, size = 2.5)+
+  stat_smooth(se=FALSE, method = "lm")+
+  stat_cor()+
+  theme_classic()
+
+lm_A <- lm(ln_mo2_minus_Bebt~min_start_real, data = recov_S_A)
+lm_A_T <- lm(ln_mo2_minus_Bebt~min_start_real + temp, data = recov_S_A)
+lm_A_T2 <- lm(ln_mo2_minus_Bebt~min_start_real * temp, data = recov_S_A)
+lm_A_ID <- lm(ln_mo2_minus_Bebt~min_start_real + ID, data = recov_S_A)
+lm_A_ID2 <- lm(ln_mo2_minus_Bebt~min_start_real * ID, data = recov_S_A)
+
+lmer_A <- lmer(ln_mo2_minus_Bebt~min_start_real + (1|ID), data = recov_S_A)
+
+BIC(lm_A, lm_A_T, lm_A_T2, lm_A_ID, lm_A_ID2, lmer_A)
+
+Anova(lm_A_T)
+
+summary(lm_A_T)
+
+qqPlot(resid(lm_A_T2))
+```
+
 
 
 
